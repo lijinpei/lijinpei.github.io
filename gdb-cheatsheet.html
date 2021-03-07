@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <title>gdb cheatsheet</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="gdb cheat sheet 这份速查表按照gdb reference manual中章节的顺序，只列出我认为值得出现在一份cheat sheet中的内容。 2.1 Invoking gdb 2.1.1 选择文件 2.1.2 选择模式 2.1.3 gdb启动过程 2.2 退出gdb..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Li Jinpei's Website</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/programming-skill.html">programming skill</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/gdb-cheatsheet.html" rel="bookmark"
+           title="Permalink to gdb cheatsheet">gdb cheatsheet</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2021-01-25T00:00:00+08:00">
+                Published: Mon 25 January 2021
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/li-jinpei.html">Li Jinpei</a>
+        </address>
+<p>In <a href="/category/programming-skill.html">programming skill</a>.</p>
+<p>tags: <a href="/tag/tool.html">tool</a> <a href="/tag/cheatsheet.html">cheatsheet</a> </p>
+</footer><!-- /.post-info -->      <h1>gdb cheat sheet</h1>
+<p>这份速查表按照gdb reference manual中章节的顺序，只列出我认为值得出现在一份cheat sheet中的内容。</p>
+<h2>2.1 Invoking gdb</h2>
+<h3>2.1.1 选择文件</h3>
+<h3>2.1.2 选择模式</h3>
+<h3>2.1.3 gdb启动过程</h3>
+<h2>2.2 退出gdb</h2>
+<p>quit [expression]</p>
+<p>q</p>
+<h2>2.3 执行shell命令</h2>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">shell</span><span class="w"> </span><span class="n">command</span><span class="o">-</span><span class="n">string</span><span class="w"></span>
+<span class="w">    </span><span class="err">!</span><span class="n">command</span><span class="o">-</span><span class="n">string</span><span class="w"></span>
+<span class="w">    </span><span class="n">make</span><span class="w"> </span><span class="n">make</span><span class="o">-</span><span class="n">args</span><span class="w"></span>
+<span class="w">    </span><span class="n">pipe</span><span class="w"> </span><span class="o">[</span><span class="n">command</span><span class="o">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shell_command</span><span class="w"></span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="o">[</span><span class="n">command</span><span class="o">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">shell_command</span><span class="w"></span>
+<span class="w">    </span><span class="n">pipe</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="n">delim</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="n">delim</span><span class="w"> </span><span class="n">shell_command</span><span class="w"></span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="n">delim</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="n">delim</span><span class="w"> </span><span class="n">shell_command</span><span class="w"></span>
+</code></pre></div>
+
+<p>例子:</p>
+<div class="highlight"><pre><span></span><code>        pipe p $_gdb_major | wc
+        | p $_gdb_major | wc
+</code></pre></div>
+
+<h2>3.2 命令设置</h2>
+<p>临时设置变量</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">setting</span><span class="w"> </span><span class="o">[</span><span class="n">value</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">-- command</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">w</span><span class="w"> </span><span class="n">setting</span><span class="w"> </span><span class="o">[</span><span class="n">value</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">-- command</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<h2>3.6 获取帮助</h2>
+<div class="highlight"><pre><span></span><code>    <span class="n">help</span>
+    <span class="n">h</span>
+
+    <span class="n">help</span> <span class="n">class</span> <span class="err">获取某一类帮助</span>
+
+    <span class="n">help</span> <span class="n">command</span> <span class="err">获得关于命令的帮助</span>
+
+    <span class="n">apropos</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span> <span class="n">regexp</span> <span class="err">搜索帮助</span>
+
+    <span class="n">complete</span> <span class="n">args</span> <span class="err">显示补全</span>
+
+    <span class="n">info</span> <span class="err">显示</span><span class="n">gdb所调试的程序的信息</span><span class="err">。</span>
+
+    <span class="n">set</span> <span class="err">设置</span><span class="n">gdb本身的状态</span><span class="err">。</span>
+
+    <span class="n">show</span> <span class="err">显示</span><span class="n">gdb本身的状态</span><span class="err">。</span>
+
+    <span class="n">show</span> <span class="n">version</span>
+    <span class="n">shwo</span> <span class="n">copying</span>
+    <span class="n">info</span> <span class="n">copying</span>
+    <span class="n">show</span> <span class="n">warranty</span>
+    <span class="n">info</span> <span class="n">warranty</span>
+    <span class="n">show</span> <span class="n">configuration</span>
+</code></pre></div>
+
+<h2>4.1 为调试而编译</h2>
+<div class="highlight"><pre><span></span><code>    -g/-ggdb3
+</code></pre></div>
+
+<p>补充：</p>
+<h2>4.2 启动程序</h2>
+<div class="highlight"><pre><span></span><code>    <span class="nv">run</span>
+    <span class="nv">r</span>
+            参数: 由<span class="nv">run</span>的参数决定，会经过<span class="nv">shell</span>展开（<span class="nv">SHELL</span>环境变量，<span class="nv">set</span> <span class="nv">startup</span><span class="o">-</span><span class="nv">with</span><span class="o">-</span><span class="nv">shell</span>命令）。
+            环境变量：<span class="nv">set</span> <span class="nv">environment</span><span class="o">/</span><span class="nv">unset</span> <span class="nv">environment</span>。
+            工作目录：<span class="nv">set</span> <span class="nv">cwd</span><span class="ss">(</span>本地调试继承自<span class="nv">gdb</span>，远程调试继承自<span class="nv">remote</span> <span class="nv">server</span><span class="ss">)</span>。
+            标准输入输出：与<span class="nv">gdb</span>相同，可通过重定向或者<span class="nv">tty</span>命令更改。（注意：使用<span class="nv">pipe</span>把程序输出传递到其他程序可能使得<span class="nv">gdb</span>调试错误的程序,不知为啥?）
+
+    <span class="nv">gdb</span>会自动重新读取<span class="nv">symbol</span> <span class="nv">file</span>。
+
+    <span class="nv">start</span> 停留到<span class="nv">main</span> <span class="nv">procedure</span>前。<span class="nv">C</span><span class="o">++</span>中，<span class="nv">static</span>和<span class="nv">global</span> <span class="nv">object</span>的<span class="nv">ctor</span>在<span class="nv">main</span>函数前执行。
+    <span class="nv">starti</span> 停留到第一条指令前。
+
+    <span class="nv">set</span> <span class="nv">startup</span><span class="o">-</span><span class="nv">with</span><span class="o">-</span><span class="nv">shell</span>
+    <span class="nv">set</span> <span class="nv">auto</span><span class="o">-</span><span class="k">connect</span><span class="o">-</span><span class="nv">native</span><span class="o">-</span><span class="nv">target</span>
+    <span class="nv">set</span> <span class="nv">disable</span><span class="o">-</span><span class="nv">randomization</span>
+</code></pre></div>
+
+<h2>4.3 程序的参数</h2>
+<div class="highlight"><pre><span></span><code>    <span class="nv">set</span> <span class="nv">args</span>
+    <span class="k">show</span> <span class="nv">args</span>
+</code></pre></div>
+
+<h2>4.4 程序的环境</h2>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="k">path</span><span class="w"> </span><span class="n">directory</span><span class="w"> </span><span class="n">添加目录到PATH环境变量中</span><span class="w"></span>
+<span class="w">    </span><span class="n">show</span><span class="w"> </span><span class="n">paths</span><span class="w"></span>
+<span class="w">    </span><span class="n">show</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="o">[</span><span class="n">varname</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">set</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="n">varname</span><span class="w"> </span><span class="o">[</span><span class="n">value</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">unset</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="n">varname</span><span class="w"></span>
+</code></pre></div>
+
+<h2>4.4 程序的工作目录</h2>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="k">set</span><span class="w"> </span><span class="n">cwd</span><span class="w"> </span><span class="o">[</span><span class="n">directory</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">show</span><span class="w"> </span><span class="n">cwd</span><span class="w"></span>
+<span class="w">    </span><span class="n">cd</span><span class="w"> </span><span class="o">[</span><span class="n">directory</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">pwd</span><span class="w"></span>
+</code></pre></div>
+
+<h2>4.4 程序的输入和输出</h2>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">info</span><span class="w"> </span><span class="n">terminal</span><span class="w"></span>
+<span class="w">    </span><span class="n">tty</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyb</span><span class="w"></span>
+<span class="w">    </span><span class="k">set</span><span class="w"> </span><span class="n">inferior</span><span class="o">-</span><span class="n">tty</span><span class="w"> </span><span class="o">[</span><span class="n">tty</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">show</span><span class="w"> </span><span class="n">inferior</span><span class="o">-</span><span class="n">tty</span><span class="w"></span>
+</code></pre></div>
+
+<h2>4.7 调试正在运行的程序</h2>
+<div class="highlight"><pre><span></span><code>    <span class="nv">attach</span> <span class="nv">process</span><span class="o">-</span><span class="nv">id</span>
+
+    <span class="nv">set</span> <span class="k">exec</span><span class="o">-</span><span class="nv">file</span><span class="o">-</span><span class="nv">mismatch</span> <span class="s1">&#39;</span><span class="s">ask/warn/off</span><span class="s1">&#39;</span>
+
+    <span class="nv">detach</span>
+            退出<span class="nv">gdb</span>时自动<span class="nv">detach</span>
+            运行<span class="nv">run</span>命令时<span class="nv">kill</span>当前<span class="nv">attach</span>的进程
+</code></pre></div>
+
+<h2>4.8 杀死子进程</h2>
+<div class="highlight"><pre><span></span><code>    kill
+</code></pre></div>
+
+<h2>4.9 调试多个inferior连接与程序</h2>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">inferior</span><span class="w"></span>
+<span class="w">            </span><span class="n">类似进程</span><span class="w"></span>
+<span class="w">            </span><span class="n">有些target没有进程的概念</span><span class="w"></span>
+<span class="w">            </span><span class="n">进程创建前及死亡后也有inferior</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">info</span><span class="w"> </span><span class="n">inferiors</span><span class="w"></span>
+<span class="w">    </span><span class="n">info</span><span class="w"> </span><span class="n">connections</span><span class="w"></span>
+<span class="w">    </span><span class="n">inferior</span><span class="w"> </span><span class="n">infno</span><span class="w"> </span><span class="n">设置当前inferior</span><span class="w"></span>
+<span class="w">    </span><span class="err">$</span><span class="n">_inferior</span><span class="w"> </span><span class="n">当前inferior的编号</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">add</span><span class="o">-</span><span class="n">inferior</span><span class="w"> </span><span class="o">[</span><span class="n">-copies n</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">-exec executable</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">-no-connection</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">clone</span><span class="o">-</span><span class="n">inferior</span><span class="w"> </span><span class="o">[</span><span class="n">-copies n</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">infno</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">remove</span><span class="o">-</span><span class="n">inferiors</span><span class="w"> </span><span class="n">infno</span><span class="p">...</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">detach</span><span class="w"> </span><span class="n">inferiors</span><span class="w"> </span><span class="n">infno</span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">kill</span><span class="w"> </span><span class="n">inferior</span><span class="w"> </span><span class="n">infno</span><span class="p">...</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">set</span><span class="w"> </span><span class="k">print</span><span class="w"> </span><span class="n">inferior</span><span class="o">-</span><span class="n">events</span><span class="w"></span>
+</code></pre></div>
+
+<h2>4.10 调试多线程程序</h2>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="k">current</span><span class="w"> </span><span class="n">thread</span><span class="w"></span>
+<span class="w">    </span><span class="n">per</span><span class="o">-</span><span class="n">inferior</span><span class="w"> </span><span class="n">thread</span><span class="w"> </span><span class="n">number</span><span class="w"></span>
+<span class="w">            </span><span class="n">inferior</span><span class="o">-</span><span class="n">num</span><span class="p">.</span><span class="n">thread</span><span class="o">-</span><span class="n">num</span><span class="w"></span>
+<span class="w">    </span><span class="k">global</span><span class="w"> </span><span class="n">thread</span><span class="w"> </span><span class="n">number</span><span class="w"></span>
+<span class="w">    </span><span class="err">$</span><span class="n">_thread</span><span class="w"> </span><span class="n">当前线程的per</span><span class="o">-</span><span class="n">inferior</span><span class="w"> </span><span class="n">thread</span><span class="w"> </span><span class="n">number</span><span class="w"></span>
+<span class="w">    </span><span class="err">$</span><span class="n">_gthread</span><span class="w"> </span><span class="n">当前线程的global</span><span class="w"> </span><span class="n">thread</span><span class="w"> </span><span class="n">number</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">info</span><span class="w"> </span><span class="n">threads</span><span class="w"> </span><span class="o">[</span><span class="n">thead-id-list</span><span class="o">]</span><span class="w"> </span><span class="n">获取线程信息</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">thread</span><span class="w"> </span><span class="n">thread</span><span class="o">-</span><span class="n">id</span><span class="w"> </span><span class="n">切换当前线程</span><span class="w"></span>
+<span class="w">    </span><span class="n">thread</span><span class="w"> </span><span class="n">apply</span><span class="w"> </span><span class="o">[</span><span class="n">thread-id-list | all [-ascending</span><span class="o">]</span><span class="err">]</span><span class="w"> </span><span class="o">[</span><span class="n">flag</span><span class="o">]</span><span class="p">...</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="n">对所有线程使用命令</span><span class="w"></span>
+<span class="w">            </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="n">执行命令发生错误时</span><span class="err">，</span><span class="n">显示错误信息</span><span class="err">，</span><span class="n">并继续执行</span><span class="w"></span>
+<span class="w">            </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="n">执行命令发生错误或产生空输出时</span><span class="err">，</span><span class="n">忽略</span><span class="err">（</span><span class="n">silent</span><span class="err">）</span><span class="w"></span>
+<span class="w">            </span><span class="o">-</span><span class="n">q</span><span class="w"> </span><span class="n">不打印线程信息</span><span class="err">（</span><span class="n">quiet</span><span class="err">）</span><span class="w"></span>
+<span class="w">    </span><span class="n">taas</span><span class="w"> </span><span class="o">[</span><span class="n">option</span><span class="o">]</span><span class="p">...</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="n">相当于thread</span><span class="w"> </span><span class="n">apply</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="o">[</span><span class="n">option</span><span class="o">]</span><span class="p">...</span><span class="w"> </span><span class="n">command</span><span class="w"></span>
+<span class="w">    </span><span class="n">tfaas</span><span class="w"> </span><span class="o">[</span><span class="n">option</span><span class="o">]</span><span class="p">...</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="n">相当于thread</span><span class="w"> </span><span class="n">apply</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="n">apply</span><span class="w"> </span><span class="ow">all</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="o">[</span><span class="n">option</span><span class="o">]</span><span class="p">...</span><span class="w"> </span><span class="n">command</span><span class="err">。</span><span class="n">接受的选项和frame</span><span class="w"> </span><span class="n">apply相同</span><span class="err">。</span><span class="w"></span>
+<span class="w">    </span><span class="n">thread</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">[</span><span class="n">name</span><span class="o">]</span><span class="w"> </span><span class="n">给当前线程一个名字</span><span class="err">。</span><span class="w"></span>
+<span class="w">    </span><span class="n">thread</span><span class="w"> </span><span class="n">find</span><span class="w"> </span><span class="o">[</span><span class="n">regexp</span><span class="o">]</span><span class="w"> </span><span class="n">搜索线程</span><span class="err">。</span><span class="w"></span>
+<span class="w">    </span><span class="k">set</span><span class="w"> </span><span class="k">print</span><span class="w"> </span><span class="n">thread</span><span class="o">-</span><span class="n">events</span><span class="w"> </span><span class="n">线程创建或退出时打印信息</span><span class="err">。</span><span class="w"></span>
+<span class="w">    </span><span class="k">set</span><span class="w"> </span><span class="n">libthread</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="k">search</span><span class="o">-</span><span class="k">path</span><span class="w"> </span><span class="o">[</span><span class="n">path</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">set</span><span class="w"> </span><span class="n">debug</span><span class="w"> </span><span class="n">lithread</span><span class="o">-</span><span class="n">db</span><span class="w"></span>
+</code></pre></div>
+
+<h2>4.12 设置书签并在以后返回</h2>
+<div class="highlight"><pre><span></span><code>    个人怀疑checkpoint是通过fork一个进程并立马暂停来实现的，disclaimer：纯个人猜测。
+
+    checkpoints 保存一个checkpoint
+    info checkpoints 列出所有的checkpoint
+    restart checkpoint-id 从一个checkpoint恢复
+    delete checkpoint checkpoint-id 删除一个checkpoint
+</code></pre></div>
+
+<h3>4.12.1 使用checkpoint的一个不明显的优点</h3>
+<div class="highlight"><pre><span></span><code>    对抗address space randomization
+</code></pre></div>
+
+<h3>5 暂停与继续</h3>
+<div class="highlight"><pre><span></span><code>    info program 显示关于程序的信息
+</code></pre></div>
+
+<h3>5.1 breakpoint watchpoint catchpoint</h3>
+<div class="highlight"><pre><span></span><code>    breakpoint: 运行到某一行暂停
+    watchpoint: 如果表达式的值改变了暂停
+    catchpoint: 当某种事件发生时暂停（抛出C++异常，装载动态库，调用系统调用）
+
+    三种&quot;断点&quot;统一编号。
+</code></pre></div>
+
+<h4>5.1.1 设置断点</h4>
+<div class="highlight"><pre><span></span><code>    <span class="k">break</span> <span class="n">location</span> <span class="err">设置断点</span>
+            <span class="err">断点在指定的位置前</span><span class="p">(</span><span class="err">也就是说停下来的时候，指定的位置包含的指令还没有执行</span><span class="p">)</span><span class="err">。</span>
+    <span class="k">break</span> <span class="err">在当前</span><span class="n">frame下一条要执行的指令处设置断点</span><span class="err">。</span>
+            <span class="err">若当前</span><span class="n">frame不是innermost</span><span class="err">，效果相当于当执行返回到当前</span><span class="n">frame时暂停</span><span class="err">。类比</span><span class="n">finish</span><span class="err">。</span>
+            <span class="err">若当前</span><span class="n">frame是innermost</span><span class="err">，在当前指令上下断点（也就是下次执行到当前指令时）。</span>
+            <span class="n">gdb在恢复执行时</span><span class="err">（</span><span class="k">continue</span><span class="err">），在执行一条指令之前会忽视断点（否则无法越过一个断点，除非临时</span><span class="k">disable</span><span class="err">）。</span>
+    <span class="k">break</span> <span class="p">...</span> <span class="k">if</span> <span class="n">cond条件断点</span>
+    <span class="n">tbreak</span> <span class="n">args</span> <span class="err">单次断点</span>
+    <span class="n">hbreak</span> <span class="n">args</span> <span class="err">设置硬件断点。</span>
+    <span class="n">thbreak</span> <span class="n">args</span> <span class="err">设置单次硬件断点。</span>
+    <span class="n">rbreak</span> <span class="n">regex</span> <span class="err">在所有匹配</span><span class="n">regex的函数处设置断点</span><span class="err">。</span>
+    <span class="n">rbreak</span> <span class="nl">file:</span><span class="n">regex</span> <span class="err">在指定文件中设置正则断点</span>
+    <span class="n">info</span> <span class="n">breakpoitns</span> <span class="p">[</span><span class="n">list</span><span class="p">...]</span>
+    <span class="n">info</span> <span class="k">break</span> <span class="p">[</span><span class="n">list</span><span class="p">...]</span> <span class="err">打印断点信息。</span>
+
+    <span class="n">set</span> <span class="n">breakpoint</span> <span class="n">pending</span> <span class="n">auto</span><span class="o">/</span><span class="n">on</span><span class="o">/</span><span class="n">off</span>
+    <span class="n">show</span> <span class="n">breakpoint</span> <span class="n">pending</span>
+
+    <span class="n">set</span> <span class="n">breakpoint</span> <span class="n">auto</span><span class="o">-</span><span class="n">hw</span> <span class="n">on</span><span class="o">/</span><span class="n">off</span>
+
+    <span class="n">set</span> <span class="n">breakpoint</span> <span class="k">always</span><span class="o">-</span><span class="n">inserted</span> <span class="n">off</span><span class="o">/</span><span class="n">on</span>
+
+    <span class="n">set</span> <span class="n">breakpoint</span> <span class="n">condition</span><span class="o">-</span><span class="n">evaluation</span> <span class="n">host</span><span class="o">/</span><span class="n">target</span><span class="o">/</span><span class="n">auto</span>
+</code></pre></div>
+
+<h4>5.1.2 设置观察点</h4>
+<div class="highlight"><pre><span></span><code>    <span class="n">watch</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="o">|</span> <span class="o">-</span><span class="n">location</span><span class="p">]</span> <span class="n">expr</span> <span class="p">[</span><span class="kr">thread</span> <span class="kr">thread</span><span class="o">-</span><span class="kt">id</span><span class="p">]</span> <span class="p">[</span><span class="n">mask</span> <span class="n">maskvalue</span><span class="p">]</span>
+    <span class="n">rwatch</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="o">|</span> <span class="o">-</span><span class="n">location</span><span class="p">]</span> <span class="n">expr</span> <span class="p">[</span><span class="kr">thread</span> <span class="kr">thread</span><span class="o">-</span><span class="kt">id</span><span class="p">]</span> <span class="p">[</span><span class="n">mask</span> <span class="n">maskvalue</span><span class="p">]</span>
+    <span class="n">awatch</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="o">|</span> <span class="o">-</span><span class="n">location</span><span class="p">]</span> <span class="n">expr</span> <span class="p">[</span><span class="kr">thread</span> <span class="kr">thread</span><span class="o">-</span><span class="kt">id</span><span class="p">]</span> <span class="p">[</span><span class="n">mask</span> <span class="n">maskvalue</span><span class="p">]</span>
+</code></pre></div>
+
+<h3>5.2 继续运行与单步调试</h3>
+<dl>
+<dt><code>continue [ignore-count]</code></dt>
+<dt><code>c [ignore-count]</code></dt>
+<dt><code>fg [ignore-count]</code></dt>
+<dd>恢复执行。当前停到的断点会被暂时忽略（停留的位置在断点前）。
+要恢复到不同的执行位置，可以使用<code>return</code>或<code>jump</code>命令。</dd>
+<dt><code>step</code></dt>
+<dd>直到运行到不同的行。
+遇到没有调试信息的函数时会被略过。
+step只会停到一行代码的第一条指令上。</dd>
+<dt><code>step count</code></dt>
+<dd>step重复count次。</dd>
+<dt><code>next [count]</code></dt>
+<dd>运行到当前frame对应的函数的不同行。
+next只会停留到一行代码的第一条指令上。</dd>
+<dt><code>set step-mode</code></dt>
+<dt><code>set step-mode on</code></dt>
+<dt><code>set step-mode off</code></dt>
+<dt><code>show step-mode</code></dt>
+<dd>设置为on时，step指令会停留到没有调试信息的函数的第一条指令上。默认值为off。</dd>
+<dt><code>finish</code></dt>
+<dd>恢复运行，知道当前frame的函数返回。</dd>
+<dt><code>set print finish [on|off]</code></dt>
+<dt><code>show print finish</code></dt>
+<dd>设置finish指令是否打印函数的返回值。</dd>
+<dt><code>until</code></dt>
+<dt><code>u</code></dt>
+<dd>运行到当前函数的，地址更靠后的一行。例如，当在一个循环的末尾时，next会跳转到循环的开头，u会越过整个循环。
+当until指令试图退出当前frame时，总会停下来。
+有时机器码的顺序和源代码不同。
+无参数的until通过单条指令运行的方式执行，因此会比有参数的until慢。</dd>
+<dt><code>until location</code></dt>
+<dt><code>u location</code></dt>
+<dd>继续运行，直到达到指定的行，或者当前函数返回。
+只有指定的行在当前函数帧中达到才会停止（也就是说可以用于跳过递归函数调用）。
+通过设置断点的方式运行，从而速度比无参数的until快。</dd>
+<dt><code>advance location</code></dt>
+<dd>继续运行，指导达到指定的位置，或当前函数返回。与until不同，advance不会越过递归函数调用。</dd>
+<dt><code>stepi</code></dt>
+<dt><code>stepi arg</code></dt>
+<dt><code>si</code></dt>
+<dd>执行单条机器码指令。<code>display /i $pc</code>可以自动显示下一条需要执行的指令。</dd>
+<dt><code>nexti</code></dt>
+<dt><code>nexti arg</code></dt>
+<dt><code>ni</code></dt>
+<dd>执行单条机器码指令。如果是一条函数调用指令，则运行到函数返回。</dd>
+<dt><code>set range-stepping</code></dt>
+<dt><code>show range-stepping</code></dt>
+<dd>控制range stepping的开关。默认为on。</dd>
+</dl>
+<h3>5.3 跳过函数和文件</h3>
+<p>Posix 系统上，指定的正则表达式的格式为"Extended Regular Expression" (man 7 regex)，非posix系统上为regcomp函数接受的正则表达式。glob为"man 7 glob"。</p>
+<dl>
+<dt><code>skip [options]</code></dt>
+<dd>
+<p>选项包括</p>
+<ul>
+<li><code>-file file</code>/<code>-fi file</code> 文件中的函数。</li>
+<li><code>-gfile file-glob-pattern</code>/<code>-gfi  file-glob-pattern</code> 匹配glob的文件中的函数。</li>
+<li><code>-function linespec</code>/<code>-fu linespec</code> 包含linespec的函数。</li>
+<li><code>-rfunction regexp</code>/<code>-rfu regexp</code> 函数名匹配regexp的函数。</li>
+</ul>
+<p>无参数时，当前函数会被跳过。</p>
+</dd>
+<dt><code>skip function [linespec]</code></dt>
+<dd>跳过包含linespec的函数。不指定function时，表示当前函数。</dd>
+<dt><code>skip file [filename]</code></dt>
+<dd>所有文件filename中的函数。不指定filename时，表示当前源文件。</dd>
+<dt><code>info skip [range]</code></dt>
+<dd>打印指定范围内的skip的信息。不指定range时，所有skip的信息都会被打印。</dd>
+<dt><code>skip delete [range]</code></dt>
+<dd>删除范围内的skip。不指定range时，删除所有skip。</dd>
+<dt><code>skip enable [range]</code></dt>
+<dd>激活range内的skip。不指定range时，激活所有skip。</dd>
+<dt><code>skip disable [range]</code></dt>
+<dd>disable range内的skip。不指定range时，disable所有skip。</dd>
+<dt><code>set debug skip [on|off]</code></dt>
+<dt><code>show debug skip</code></dt>
+<dd>设置与显示是否打印skip信息。</dd>
+</dl>
+<h3>5.4 信号</h3>
+<h2>6 反向执行</h2>
+<p>部分target支持反向执行，可以通过<code>record</code>或<code>record btrace</code>命令激活；full system emulator通常直接支持反向执行。</p>
+<dl>
+<dt><code>revrese-continue [ignore-count]</code></dt>
+<dt><code>rc [ignore-count]</code></dt>
+<dd>反向继续运行。会停留到breakpoint和synchronous exception/signal上，asynchronous signal的行为取决于目标环境。</dd>
+<dt><code>reverse-step [count]</code></dt>
+<dd>反向单步执行。只会停留在一行代码的开头。如果上一行代码包括函数调用，则会停留在被调用函数的最后一句（通常是return）。若函数调用不包含调试信息，则不会停留。</dd>
+<dt><code>reverse-stepi [count]</code></dt>
+<dd>反向执行一条机器指令。要执行的指令不是当前pc正指向的指令，而是pc之前指向的指令。</dd>
+<dt><code>reverse-next [count]</code></dt>
+<dd>反向执行当前函数中上一行代码。在函数的第一行，reverse-next会运行到调用函数的地方。</dd>
+<dt><code>reverse-nexti [count]</code></dt>
+<dd>反向执行上一条机器码。当上一条机器码是函数返回时，会执行到当前函数帧中的函数调用语句。</dd>
+<dt><code>reverse-finish</code></dt>
+<dd>执行到当前函数的开头，停留在开头(函数被调用之后)。</dd>
+<dt><code>set exec-direction</code></dt>
+<dt><code>set exec-direction reverse</code></dt>
+<dt><code>set exec-direction forward</code></dt>
+<dd>设置执行的方向。影响到的指令为step, stepi, next, nexti, continue, finish。return不受影响。</dd>
+</dl>
+<h2>7 记录inferior的运行并重放</h2>
+<p>process record and replay target</p>
+<p>replay mode</p>
+<p>record mode</p>
+<dl>
+<dt><code>record method</code></dt>
+<dd>method参数可以是<div class="highlight"><pre><span></span><code>- full GDB&#39;s software record and replay implementation
+- btrace format。只支持Intel处理器；不记录数据，从而无法查看变量和寄存器；remote debugging时，disconnect后继续record。format可以是
+    - bts Branch Trace Store格式
+    - pt Intel Processor Trace格式
+</code></pre></div>
+
+</dd>
+</dl>
+<p>process record and replay target中自动禁用displaced stepping；full recoding mode不支持non-stop mode和asynchronous execution mode。</p>
+<dl>
+<dt><code>record stop</code></dt>
+<dd>停止process record and replay target。在record模式停止时，可以以非record模式继续运行；以replay模式停止时，可以以当前停止到的状态继续运行。</dd>
+<dt><code>record goto</code></dt>
+<dd>转到execution log指定位置。
+- <code>record goto begin</code>/<code>record goto start</code> 转到execution log的开头。
+- <code>record goto end</code> 转到execution log的结尾。
+- <code>record goto n</code> 转到execution log的第n条指令。</dd>
+<dt><code>record save filename</code></dt>
+<dd>保存execution log到文件。默认文件名为<code>gdb_record.process_id</code>。不是所有的recording method都支持。</dd>
+<dt><code>record restore filename</code></dt>
+<dd>从filename中恢复execution log。文件必须是用record save创建的。</dd>
+<dt><code>set record full insn-number-max limit</code></dt>
+<dt><code>set record full insn-number-max unlimited</code></dt>
+<dt><code>show record full insn-number-max</code></dt>
+<dd>设置full recording method最大记录的指令数。默认200000。</dd>
+<dt><code>set record full stop-at-limit</code></dt>
+<dt><code>show record full stop-at-limit</code></dt>
+<dd>控制记录的指令数到达limit时是否停下来。</dd>
+<dt><code>set record full memory-query</code></dt>
+<dt><code>show record full memory-query</code></dt>
+<dd>控制当gdb无法记录指令造成的memory更改时的行为。</dd>
+<dt><code>info record</code></dt>
+<dd>查看关于记录的信息。</dd>
+<dt><code>record delete</code></dt>
+<dd>在replay模式下，删除后续execution log，并开始从当前地址记录行的execution log。</dd>
+<dt><code>record instruction-history</code></dt>
+<dd>
+<p>从execution log之反汇编指令。</p>
+<p>接受的修饰符如下:</p>
+<ul>
+<li><code>/m</code> 混合模式（源码+汇编）</li>
+<li><code>/s</code> 源码</li>
+<li><code>/r</code> raw模式</li>
+<li><code>/p</code> 不标记出当前指令</li>
+<li><code>/f</code> 不标记出当前函数</li>
+</ul>
+<p>speculatively executed instrution以<code>?</code>标出，并不是所有的记录格式都支持这一特性。</p>
+<p>指定反汇编的指令的范围：</p>
+<ul>
+<li><code>record instruction-history insn</code> 从insn开始的10条指令。</li>
+<li><code>record instruction-history inst, +/-n</code> insn后/前的n条指令。</li>
+<li><code>record instruction-history</code> 上次反汇编位置后的10条指令。</li>
+<li><code>record instruction-history -</code> 上次反汇编指令前的10条指令。</li>
+<li><code>record instruction-history begin, end</code> begin end范围内的指令（闭区间）。</li>
+</ul>
+<p>并不是所有的recording method都支持这条指令。</p>
+</dd>
+<dt><code>set record instruction-history-size size</code></dt>
+<dt><code>set record instruction-history-size unlimited</code></dt>
+<dt><code>show record instruction-history-size</code></dt>
+<dd>设置与显示<code>record instruction-history</code>命令默认反汇编多少条指令。默认值为10。</dd>
+<dt><code>record function-call-history</code></dt>
+<dd>
+<p>显示函数粒度的执行历史。</p>
+<p>修饰符:</p>
+<ul>
+<li><code>/l</code> 打印对应的行号</li>
+<li><code>/i</code> 打印对应指令编号</li>
+<li><code>/c</code> 缩进函数名以反映函数调用栈</li>
+</ul>
+<p>指定要打印的函数:</p>
+<ul>
+<li><code>record function-call-history func</code> 从func开头的10个函数</li>
+<li><code>record function-call-history func, +/-n</code> func后/前的n个函数</li>
+<li><code>record function-call-history func</code> 上次打印位置后的10个函数</li>
+<li><code>record function-call-history func -</code> 上次打印位置前的10个函数</li>
+<li><code>record function-call-history func begin, end</code> begin end范围内的函数。闭区间。</li>
+</ul>
+<p>并不是所有的recording method都支持这条指令。</p>
+</dd>
+<dt><code>set record function-call-history size</code></dt>
+<dt><code>set record function-call-history unlimited</code></dt>
+<dt><code>show record function-call-history</code></dt>
+<dd>设置与显示<code>record function-call-history</code>显示行数的默认值。</dd>
+</dl>
+<h2>9 查看源代码</h2>
+<h3>9.1 打印源代码</h3>
+<div class="highlight"><pre><span></span><code>    <span class="n">list</span> <span class="n">linenum</span>
+    <span class="n">list</span> <span class="n">function</span>
+    <span class="n">list</span> <span class="err">打印更多行</span>
+    <span class="n">list</span> <span class="o">-</span> <span class="err">打印前一行</span>
+
+    <span class="n">set</span> <span class="n">listsize</span> <span class="n">count</span><span class="o">/</span><span class="n">unlimited</span>
+
+    <span class="n">list</span> <span class="n">location</span>
+    <span class="n">list</span> <span class="n">first</span><span class="p">,</span><span class="n">second</span>
+    <span class="n">list</span> <span class="p">,</span><span class="n">last</span>
+    <span class="n">list</span> <span class="n">first</span><span class="p">,</span>
+    <span class="n">list</span> <span class="o">+</span>
+    <span class="n">list</span> <span class="o">-</span>
+    <span class="n">list</span>
+</code></pre></div>
+
+<h3>9.2 指定位置</h3>
+<h4>9.2.1 行位置</h4>
+<div class="highlight"><pre><span></span><code>    <span class="n">linenum</span> <span class="err">当前源代码的行号。</span>
+
+    <span class="o">-</span><span class="n">offset</span>
+    <span class="o">+</span><span class="n">offset</span> <span class="err">相对当前行的偏移位置。对于</span><span class="n">list命令</span><span class="err">，相对于上一个打印的行</span><span class="p">;</span><span class="err">对于断点命令，想对于当前栈帧中停留的断点</span><span class="p">;</span><span class="err">当作为</span><span class="n">list的第二个参数时</span><span class="err">，想对于</span><span class="n">list的第一个参数</span><span class="err">。</span>
+
+    <span class="n">filename</span><span class="p">:</span><span class="n">linenum</span>
+
+    <span class="n">function</span> <span class="err">在</span><span class="n">C</span><span class="o">++</span><span class="err">中，会匹配所有</span><span class="n">namespace以及class中的函数</span><span class="err">。使用</span><span class="o">-</span><span class="n">qualified来匹配fully</span><span class="o">-</span><span class="n">qualified名字</span><span class="err">。</span>
+
+    <span class="n">function</span><span class="p">:</span><span class="n">label</span> <span class="err">匹配函数中的</span><span class="n">label</span><span class="err">。</span>
+
+    <span class="n">label</span> <span class="err">选择当前栈帧对应函数中的</span><span class="n">label</span><span class="err">。</span>
+
+    <span class="err">`</span><span class="o">-</span><span class="n">pstap</span><span class="o">|-</span><span class="n">probe</span><span class="o">-</span><span class="n">stap</span> <span class="p">[</span><span class="n">objfile</span><span class="p">:[</span><span class="n">provider</span><span class="p">:]]</span><span class="n">name</span><span class="err">`</span> <span class="k">static</span> <span class="n">probe</span> <span class="n">point</span>
+</code></pre></div>
+
+<h4>9.2.2 显式位置</h4>
+<p>-source filename 要区分相同basename的文件，在文件的basename前添加足够多的目录名。</p>
+<p>-function function 在C++中，指所有作用域中名为function的函数，包括namespace和class。</p>
+<p>-qualified 使function匹配fully-qualified name。也可用于行位置。</p>
+<p>-label label 指定函数中的label。当未指定函数时，在所选择的栈帧中搜索label。</p>
+<p>-line number 指定行偏移，可以是绝对(<code>-line 3</code>)或者相对(<code>-line +3</code>)。</p>
+<h4>9.2.3 地址位置</h4>
+<p><code>*address</code>，其中address可以是任意表达式。</p>
+<p>expression 当前working language的任意合法表达式。</p>
+<p>funaddr 指定函数的第一条指令的地址，在栈帧和参数被设置之前。</p>
+<p>'filename':funcaddr</p>
+<h3>9.3 编辑源文件</h3>
+<div class="highlight"><pre><span></span><code>    edit location
+</code></pre></div>
+
+<h4>9.3.1 选择编辑器</h4>
+<div class="highlight"><pre><span></span><code>    EDITOR环境变量
+</code></pre></div>
+
+<h3>9.4 搜索源文件</h3>
+<p>forward-search regexp
+search regexp</p>
+<p>reverse-search regexp</p>
+<h3>9.5 指定源码目录</h3>
+<p>source path: gdb搜索源文件的路径</p>
+<p>source path总包含编译目录<code>$cdir</code>和当前工作目录<code>$cwd</code></p>
+<p><code>$cwd</code>与<code>.</code>的区别： <code>.</code>在加入source path时被展开为当前工作目录，<code>$cwd</code>可作为source path的一项出现，表示当前工作目录。</p>
+<p>If a compilation directory is recorded in the debug information, and GDB has not found the source file after the first search using source path, then GDB will combine the compilation directory and the filename, and then search for the source file again using the source path.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">directory</span><span class="w"> </span><span class="n">dirname</span><span class="w"></span>
+<span class="w">    </span><span class="n">dir</span><span class="w"> </span><span class="n">dirname</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">directory</span><span class="w"> </span><span class="n">重置source</span><span class="w"> </span><span class="n">path为默认值</span><span class="err">。</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">set</span><span class="w"> </span><span class="n">directories</span><span class="w"> </span><span class="k">path</span><span class="o">-</span><span class="n">list</span><span class="w"> </span><span class="n">设置source</span><span class="w"> </span><span class="k">path</span><span class="err">，</span><span class="n">若不包含</span><span class="err">`$</span><span class="nl">cdir</span><span class="p">:</span><span class="err">$</span><span class="n">cdw</span><span class="err">`</span><span class="n">会自动添加</span><span class="err">。</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">show</span><span class="w"> </span><span class="n">direcotries</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">set</span><span class="w"> </span><span class="n">substitue</span><span class="o">-</span><span class="k">path</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">to</span><span class="w"></span>
+<span class="w">    </span><span class="n">unset</span><span class="w"> </span><span class="n">substitute</span><span class="o">-</span><span class="k">path</span><span class="w"> </span><span class="o">[</span><span class="n">path</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">show</span><span class="w"> </span><span class="n">substitute</span><span class="o">-</span><span class="k">path</span><span class="w"> </span><span class="o">[</span><span class="n">path</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<h3>9.6 源码和机器码</h3>
+<div class="highlight"><pre><span></span><code>    <span class="nv">info</span> <span class="nv">line</span>
+    <span class="nv">info</span> <span class="nv">line</span> <span class="nv">location</span>
+
+    <span class="nv">disassemble</span>
+    <span class="nv">disassemble</span> <span class="o">/</span><span class="nv">m</span>
+    <span class="nv">disassemble</span> <span class="o">/</span><span class="nv">s</span>
+    <span class="nv">disassemble</span> <span class="o">/</span><span class="nv">r</span>
+
+            <span class="nv">start</span>,<span class="k">end</span>
+            <span class="nv">start</span>,<span class="o">+</span><span class="nv">length</span>
+    <span class="nv">set</span> <span class="nv">disassembler</span><span class="o">-</span><span class="nv">options</span> <span class="nv">option1</span>[,<span class="nv">option2</span>...]
+    <span class="k">show</span> <span class="nv">disassembler</span><span class="o">-</span><span class="nv">options</span>
+
+    <span class="nv">set</span> <span class="nv">disassembly</span><span class="o">-</span><span class="nv">flavor</span> <span class="nv">instruction</span><span class="o">-</span><span class="nv">set</span>
+    <span class="k">show</span> <span class="nv">disassembly</span><span class="o">-</span><span class="nv">flavor</span> <span class="nv">instruction</span><span class="o">-</span><span class="nv">set</span>
+    <span class="k">show</span> <span class="nv">disassembly</span><span class="o">-</span><span class="nv">flavor</span>
+
+    <span class="nv">set</span> <span class="nv">disassemble</span><span class="o">-</span><span class="k">next</span><span class="o">-</span><span class="nv">line</span>
+    <span class="k">show</span> <span class="nv">disassemble</span><span class="o">-</span><span class="k">next</span><span class="o">-</span><span class="nv">line</span>
+</code></pre></div>
+
+<h2>10 查看数据</h2>
+<p>inspect和print同义。</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="k">print</span><span class="w"> </span><span class="o">[</span><span class="n">[options</span><span class="o">]</span><span class="w"> </span><span class="o">--</span><span class="err">]]</span><span class="w"> </span><span class="n">expr</span><span class="w"></span>
+<span class="w">    </span><span class="k">print</span><span class="w"> </span><span class="o">[</span><span class="n">[options</span><span class="o">]</span><span class="w"> </span><span class="o">--</span><span class="err">]</span><span class="w"> </span><span class="o">/</span><span class="n">f</span><span class="w"> </span><span class="n">expr</span><span class="w"></span>
+
+<span class="w">    </span><span class="err">`</span><span class="o">/</span><span class="n">f</span><span class="err">`</span><span class="n">中的f是format</span><span class="w"> </span><span class="n">letter</span><span class="w"></span>
+
+<span class="w">    </span><span class="o">-</span><span class="n">address</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">设置是否打印地址</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="k">array</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">是否格式化数组</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="k">array</span><span class="o">-</span><span class="n">indexes</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">是否打印数组下标</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="n">elements</span><span class="w"> </span><span class="n">number</span><span class="o">-</span><span class="k">of</span><span class="o">-</span><span class="n">elements</span><span class="o">|</span><span class="n">unlimited</span><span class="w"> </span><span class="n">打印字符串长度或数组元素数目的限制</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="nf">max</span><span class="o">-</span><span class="k">depth</span><span class="w"> </span><span class="k">depth</span><span class="o">|</span><span class="n">unlimited</span><span class="w"> </span><span class="n">嵌套structutre打印的层数</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="k">null</span><span class="o">-</span><span class="n">stop</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">打印字符数组时</span><span class="err">，</span><span class="n">是否在第一个空字符停止</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="k">object</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">是否打印C</span><span class="o">++</span><span class="n">虚函数表</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="n">pretty</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">是否格式化structure</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="n">raw</span><span class="o">-</span><span class="k">values</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">是否跳过pretty</span><span class="o">-</span><span class="n">printer</span><span class="err">，</span><span class="n">以raw</span><span class="w"> </span><span class="n">form打印</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="n">repeats</span><span class="w"> </span><span class="n">number</span><span class="o">-</span><span class="k">of</span><span class="o">-</span><span class="n">repeats</span><span class="o">|</span><span class="n">unlimited</span><span class="w"> </span><span class="n">重复元素打印阈值</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="k">static</span><span class="o">-</span><span class="n">members</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">是否打印C</span><span class="o">++</span><span class="n">静态成员</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="n">symbol</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">打印指针时是否打印symbol</span><span class="w"> </span><span class="n">name</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="ow">union</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">是否打印structure中的union</span><span class="w"></span>
+<span class="w">    </span><span class="o">-</span><span class="n">vtbl</span><span class="w"> </span><span class="o">[</span><span class="n">on|off</span><span class="o">]</span><span class="w"> </span><span class="n">设置是否打印C</span><span class="o">++</span><span class="n">虚函数表</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">print</span><span class="w"> </span><span class="o">[</span><span class="n">options</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="k">print</span><span class="w"> </span><span class="o">[</span><span class="n">options</span><span class="o">]</span><span class="w"> </span><span class="o">/</span><span class="n">f</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">不给出表达式时</span><span class="err">，</span><span class="n">重复打印上一个值</span><span class="w"></span>
+</code></pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

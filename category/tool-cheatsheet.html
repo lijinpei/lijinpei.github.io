@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <title>Li Jinpei's Website - tool, cheatsheet</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Li Jinpei's Website</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/tool-cheatsheet.html">tool, cheatsheet</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/markdown-cheatsheet.html">markdown cheatsheet</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2021-01-25T00:00:00+08:00">
+                Published: Mon 25 January 2021
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/li-jinpei.html">Li Jinpei</a>
+        </address>
+<p>In <a href="/category/tool-cheatsheet.html">tool, cheatsheet</a>.</p>
+
+</footer><!-- /.post-info --><h1>Markdown 总结</h1>
+<h2>Basic Syntax</h2>
+<p>heading <code>&lt;h1&gt;</code>,<code>&lt;h2&gt;</code>等 :</p>
+<p>paragraph <code>&lt;p&gt;</code> :</p>
+<p>line break <code>&lt;br&gt;</code> :</p>
+<p>emphasis包括bold和italic</p>
+<p>bold:</p>
+<p>italic:</p>
+<p>blockquote : <code>&gt;</code></p>
+<p>lists包括有序列表和无序列表</p>
+<p>ordered lists</p>
+<p>unordered lists</p>
+<p>code block 代码块</p>
+<p>四个空格或者1个tab缩进</p>
+<p>在列表中需要8个空格或者2个tab缩进</p>
+<p>image :<code>![名称](路径)</code></p>
+<p>linking image(就是点击会跳转到链接的image) :<code>[![名称](路径)](url)</code></p>
+<p>代码: ``</p>
+<p>在代码中使用backtick : 双backtick escape</p>
+<p>horizontal rules</p>
+<p>link : <code>[link text](url "tooltip")</code></p>
+<p>url : <code>&lt;url&gt;</code> <code>&lt;邮箱地址&gt;</code></p>
+<p>url中的空格使用base64编码<code>%20</code></p>
+<p>reference-style link</p>
+<p>第一部分 <code>[text][label]</code>;第二部分 <code>[label]: url 描述</code>;label不区分大小写</p>
+<p>转义 <code>\\</code></p>
+<p>使用空行分割block-level html element</p>
+<p>不能在block-level html tag中使用markdown语法</p>
+<h2>extended syntax</h2>
+<p>扩展语法是与工具相关的</p>
+<p>CommonMark
+GitHub Flavored Markdown(GFM)
+Markdown Extra
+MuiltiMarkdown
+R Markdown</p>
+<p>tables</p>
+<p>https://www.tablesgenerator.com/markdown_tables</p>
+<p>表格对齐</p>
+<p>在表格中使用pipe字符: <code>&amp;#124;</code></p>
+<p>fenced code blocks及语法高亮</p>
+<p>脚注:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Here</span><span class="s1">&#39;s a simple footnote,[^1] and here&#39;</span><span class="n">s</span> <span class="n">a</span> <span class="n">longer</span> <span class="n">one</span><span class="p">.[</span><span class="o">^</span><span class="n">bignote</span><span class="p">]</span>
+
+<span class="p">[</span><span class="o">^</span><span class="mi">1</span><span class="p">]:</span> <span class="n">This</span> <span class="k">is</span> <span class="n">the</span> <span class="k">first</span> <span class="n">footnote</span><span class="p">.</span>
+
+<span class="p">[</span><span class="o">^</span><span class="n">bignote</span><span class="p">]:</span> <span class="n">Here</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">one</span> <span class="k">with</span> <span class="n">multiple</span> <span class="n">paragraphs</span> <span class="k">and</span> <span class="n">code</span><span class="p">.</span>
+
+    <span class="n">Indent</span> <span class="n">paragraphs</span> <span class="k">to</span> <span class="n">include</span> <span class="n">them</span> <span class="k">in</span> <span class="n">the</span> <span class="n">footnote</span><span class="p">.</span>
+
+    <span class="o">`</span><span class="err">{</span> <span class="n">my</span> <span class="n">code</span> <span class="err">}</span><span class="o">`</span>
+
+    <span class="k">Add</span> <span class="k">as</span> <span class="n">many</span> <span class="n">paragraphs</span> <span class="k">as</span> <span class="n">you</span> <span class="k">like</span><span class="p">.</span>
+</code></pre></div>
+
+<p>heading ID <code>{#custom-id}</code></p>
+<p>linking to Heading IDs <code>[Heading IDs](#heading-ids)</code></p>
+<p>definition list</p>
+<div class="highlight"><pre><span></span><code><span class="k">First</span> <span class="n">Term</span>
+<span class="p">:</span> <span class="n">This</span> <span class="k">is</span> <span class="n">the</span> <span class="n">definition</span> <span class="k">of</span> <span class="n">the</span> <span class="k">first</span> <span class="n">term</span><span class="p">.</span>
+
+<span class="k">Second</span> <span class="n">Term</span>
+<span class="p">:</span> <span class="n">This</span> <span class="k">is</span> <span class="n">one</span> <span class="n">definition</span> <span class="k">of</span> <span class="n">the</span> <span class="k">second</span> <span class="n">term</span><span class="p">.</span>
+<span class="p">:</span> <span class="n">This</span> <span class="k">is</span> <span class="n">another</span> <span class="n">definition</span> <span class="k">of</span> <span class="n">the</span> <span class="k">second</span> <span class="n">term</span><span class="p">.</span>
+</code></pre></div>
+
+<p>strikethrought <code>~~text~~</code></p>
+<p>task list</p>
+<div class="highlight"><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">press</span><span class="w"> </span><span class="k">release</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="o">[</span><span class="n"> </span><span class="o">]</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">website</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="o">[</span><span class="n"> </span><span class="o">]</span><span class="w"> </span><span class="n">Contact</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">media</span><span class="w"></span>
+</code></pre></div>
+
+<p>automatic url linking及禁用</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/sed-cheatsheet.html" rel="bookmark"
+                           title="Permalink to sed cheatsheet">sed cheatsheet</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2021-01-25T00:00:00+08:00">
+                Published: Mon 25 January 2021
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/li-jinpei.html">Li Jinpei</a>
+        </address>
+<p>In <a href="/category/tool-cheatsheet.html">tool, cheatsheet</a>.</p>
+
+</footer><!-- /.post-info -->                <h1>Sed 总结</h1>
+                <a class="readmore" href="/sed-cheatsheet.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

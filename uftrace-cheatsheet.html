@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <title>uftrace cheatsheet</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="编译选项: -pg/-finstrument-functions ELF不能被strip 子命令: record 运行命令收集数据 replay 打印输出函数执行的记录 live: record + replay report: 汇报多种信息 info: side-band info..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Li Jinpei's Website</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/programming-skill.html">programming skill</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/uftrace-cheatsheet.html" rel="bookmark"
+           title="Permalink to uftrace cheatsheet">uftrace cheatsheet</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2021-03-07T00:00:00+08:00">
+                Published: Sun 07 March 2021
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/li-jinpei.html">Li Jinpei</a>
+        </address>
+<p>In <a href="/category/programming-skill.html">programming skill</a>.</p>
+<p>tags: <a href="/tag/tool.html">tool</a> <a href="/tag/cheatsheet.html">cheatsheet</a> </p>
+</footer><!-- /.post-info -->      <p>编译选项: -pg/-finstrument-functions
+ELF不能被strip</p>
+<p>子命令:
+    record 运行命令收集数据
+    replay 打印输出函数执行的记录
+    live: record + replay
+    report: 汇报多种信息
+    info: side-band info
+    dump: 以raw格式打印文件中数据
+    recv: 从网络接收数据
+    graph: 打印函数调用图
+    script: 对记录的函数调用运行脚本
+    tui: 显示tui界面</p>
+<p>选项:
+    <code>-d DATA, --data=DATA</code> 指定trace data目录，默认为<code>uftrace.data</code>。</p>
+<p>uftrace-record</p>
+<p>选项:</p>
+<div class="highlight"><pre><span></span><code><span class="n n-Quoted">`-A SPEC, --argument=SPEC`</span> <span class="n">记录函数参数。</span>
+<span class="n n-Quoted">`-R SPEC, --retval=SPEC`</span> <span class="n">记录函数返回值。</span>
+<span class="n n-Quoted">`-P FUNC, --patch=FUNC`</span> <span class="n">对函数进行dynamical</span> <span class="n">patch。</span>
+<span class="n n-Quoted">`-U SIZE, --unpatch=SIZE`</span> <span class="n">对大于SIZE的函数进行dynamic</span> <span class="n">patch。</span>
+<span class="n n-Quoted">`-E EVENT, --event=EVENT`</span> <span class="n">启用event</span> <span class="n">tracing。</span>
+<span class="n n-Quoted">`-S SCRIPT_PATH, --script=SCRIPT_PATH`</span> <span class="n">在函数入口和推出时执行制定脚本。</span>
+<span class="n n-Quoted">`-W, --watch=POINT`</span> <span class="n">对POINT添加watch</span> <span class="kt">point</span><span class="n">。</span>
+<span class="n n-Quoted">`-a, --auto-args`</span> <span class="n">自动记载已知函数的参数和返回值。</span>
+<span class="n n-Quoted">`-l, --nest-libcall`</span> <span class="n">记录库间的函数调用。默认只记录主executable中的函数调用。</span>
+<span class="n n-Quoted">`-k, --kernel`</span> <span class="n">记录内核函数。默认只记录内核入口</span><span class="o">/</span><span class="n">出口函数，可使用</span><span class="n n-Quoted">`--kernel-depth`</span><span class="n">覆盖。</span>
+<span class="n n-Quoted">`-K DEPTH, --kernel-depth=DEPTH`</span> <span class="n">设置内核函数记录的最大深度。</span>
+<span class="n n-Quoted">`--host=HOST`</span> <span class="n">将记录的数据通过网络发送到指定地址，而不是写入到文件。</span>
+<span class="n n-Quoted">`--port=PORT`</span> <span class="n">通过网络发送数据时的端口号。默认为8090。</span>
+<span class="n n-Quoted">`--signal=TRG`</span> <span class="n">在选择的信号而不是函数上设置trigger。允许的行为包括</span><span class="n n-Quoted">`trace_on`</span><span class="n">，</span><span class="n n-Quoted">`trace_off`</span><span class="n">，</span><span class="n n-Quoted">`finish`</span><span class="n">。</span>
+<span class="n n-Quoted">`--nop`</span> <span class="n">不记录任何函数。用于性能比较。</span>
+<span class="n n-Quoted">`--force`</span> <span class="n">即使发生一些问题也运行uftrace。问题包括：无mcount</span> <span class="n">symbol，无</span><span class="o">-</span><span class="n">pg选项从而不能记录函数参数和返回值。</span>
+<span class="n n-Quoted">`--time`</span> <span class="n">以</span><span class="n n-Quoted">`time(1)`</span><span class="n">格式打印</span>
+<span class="n n-Quoted">`-e, --estimate-return`</span> <span class="n">不通过修改栈的方式记录函数返回值。此时无法记录函数返回时间，函数返回时间估计为两次函数调用间隔的一半。</span>
+
+<span class="n n-Quoted">`-F FUNC, --filter=FUNC`</span> <span class="n">设置filter为记录函数和其子函数。</span>
+<span class="n n-Quoted">`-N FUNC, --notrace=FUNC`</span> <span class="n">设置filter为不记录函数和其子函数。</span>
+<span class="n n-Quoted">`-C FUNC, --caller-filter=FUNC`</span> <span class="n">设置filter为只记录选择的函数。</span>
+<span class="n n-Quoted">`-T TRG, --trigger=TRG`</span> <span class="n">在选择的函数上设置trigger。</span>
+<span class="n n-Quoted">`-D DEPTH, --depth=DEPTH`</span> <span class="n">设置全局的嵌套深度限制。</span>
+<span class="n n-Quoted">`-t TIME, --time-filter=TIME`</span> <span class="n">不显示执行时间在TIME以下的函数。如果显式指定了</span><span class="n n-Quoted">`trace`</span> <span class="k">trigger</span><span class="n">，则忽略执行时间的限制。</span>
+<span class="n n-Quoted">`--no-libcall`</span> <span class="n">不记录库函数的调用。库函数调用的trace通过hook在PLT中的dynamic</span> <span class="n">linker的resolver函数实现，可以使用这个选项禁用。</span>
+<span class="n n-Quoted">`--no-event`</span> <span class="n">禁用event</span> <span class="n">recording，使用</span><span class="n n-Quoted">`--event`</span><span class="n">显式指定的trace不受此影响。</span>
+<span class="n n-Quoted">`--match=TYPE`</span> <span class="n">TYPE可以为glob或regex，默认为regex。</span>
+<span class="n n-Quoted">`--disable`</span> <span class="n">运行uftrace，禁用tracing。只有设置了</span><span class="n n-Quoted">`trace_on`</span> <span class="n">trigger时才有意义。</span>
+</code></pre></div>
+
+<p>记录配置选项:</p>
+<div class="highlight"><pre><span></span><code>`-L PATH, --library-path=PATH` 从指定路径装载内部库。
+`-b SIZE, --buffer=SIZE` 设置内部buffer的大小，默认128k。
+`--kernel-buffer=SIZE` 设置内核tracing buffer的大小。默认1408k。
+`--no-pltbind` 不bind dynamic symbol address。这个选项使用LD_BIND_NOT环境变量来trace函数调用。
+`--max-stack=DEPTH` 设置tracing时最大函数调用栈深度。默认值1024。
+`--num-threads=NUM` 设置用于记录trace数据的内核数，默认为在线CPU数的1/4，但当激活了full kernel trace时，会使用全部可用的CPU。
+`--libmcount-single` 使用单线程版本的libmcount以提高记录速度。当程序链接到pthread时这个选项会被忽略。
+`--rt-prio=PRIO` 提高记录数据的线程的优先级到real-time(FIFO)优先级PRIO。在大量数据，例如full kernel tracing时有用。
+`--keep-pid` 对于被trace的程序，保留同样的pid。由于uftrace内部调用fork，pid通常会变。
+`--no-randomize-addr` 禁用ASLR(Address Space Layout Randomization)。
+`--srcline` 激活记录行号。
+</code></pre></div>
+
+<p>过滤器 filter:</p>
+<div class="highlight"><pre><span></span><code><span class="err">`</span><span class="o">-</span><span class="n">C</span><span class="err">`</span><span class="n">选项会记录caller</span><span class="err">。</span><span class="w"></span>
+<span class="err">`</span><span class="o">-</span><span class="n">t</span><span class="err">`</span><span class="w"> </span><span class="n">选项在记录数据时</span><span class="err">，</span><span class="n">不支持内核函数</span><span class="err">，</span><span class="n">可以在显示时对内核函数指定</span><span class="err">`</span><span class="o">-</span><span class="n">t</span><span class="err">`。</span><span class="w"></span>
+<span class="n">通过</span><span class="err">`</span><span class="nv">@kernel</span><span class="err">`</span><span class="w"> </span><span class="n">modifier</span><span class="o">/</span><span class="n">后缀指定内核函数</span><span class="err">。</span><span class="w"></span>
+</code></pre></div>
+
+<p>触发器 trigger</p>
+<p>BNF:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="n">trigger</span><span class="o">&gt;</span>   <span class="o">:=</span> <span class="o">&lt;</span><span class="n">symbol</span><span class="o">&gt;</span> <span class="s">&quot;@&quot;</span> <span class="o">&lt;</span><span class="n">actions</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">actions</span><span class="o">&gt;</span>   <span class="o">:=</span> <span class="o">&lt;</span><span class="n">action</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">action</span><span class="o">&gt;</span> <span class="s">&quot;,&quot;</span> <span class="o">&lt;</span><span class="n">actions</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">action</span><span class="o">&gt;</span>    <span class="o">:=</span> <span class="s">&quot;depth=&quot;</span><span class="o">&lt;</span><span class="n">num</span><span class="o">&gt;</span> <span class="o">|</span> <span class="s">&quot;trace&quot;</span> <span class="o">|</span> <span class="s">&quot;trace_on&quot;</span> <span class="o">|</span> <span class="s">&quot;trace_off&quot;</span>
+                <span class="o">|</span> <span class="s">&quot;time=&quot;</span><span class="o">&lt;</span><span class="n">time_spec</span><span class="o">&gt;</span> <span class="o">|</span> <span class="s">&quot;read=&quot;</span><span class="o">&lt;</span><span class="n">read_spec</span><span class="o">&gt;</span> <span class="o">|</span> <span class="s">&quot;finish&quot;</span>
+                <span class="o">|</span> <span class="s">&quot;filter&quot;</span> <span class="o">|</span> <span class="s">&quot;notrace&quot;</span> <span class="o">|</span> <span class="s">&quot;recover&quot;</span>
+<span class="o">&lt;</span><span class="n">time_spce</span><span class="o">&gt;</span> <span class="o">:=</span> <span class="o">&lt;</span><span class="n">num</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">time_unit</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="o">&lt;</span><span class="n">time_unit</span><span class="o">&gt;</span> <span class="o">:=</span> <span class="s">&quot;ns&quot;</span> <span class="o">|</span> <span class="s">&quot;nsec&quot;</span> <span class="o">|</span> <span class="s">&quot;us&quot;</span> <span class="o">|</span> <span class="s">&quot;usec&quot;</span> <span class="o">|</span> <span class="s">&quot;ms&quot;</span> <span class="o">|</span> <span class="s">&quot;msec&quot;</span> <span class="o">|</span> <span class="s">&quot;s&quot;</span> <span class="o">|</span> <span class="s">&quot;sec&quot;</span> <span class="o">|</span> <span class="s">&quot;m&quot;</span> <span class="o">|</span> <span class="s">&quot;min&quot;</span>
+<span class="o">&lt;</span><span class="n">read_spec</span><span class="o">&gt;</span> <span class="o">:=</span> <span class="s">&quot;proc/statm&quot;</span> <span class="o">|</span> <span class="s">&quot;page-fault&quot;</span> <span class="o">|</span> <span class="s">&quot;pmu-cycle&quot;</span> <span class="o">|</span> <span class="s">&quot;pmu-cache&quot;</span> <span class="o">|</span> <span class="s">&quot;pmu-branch&quot;</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">depth</span> <span class="n">trigger用于修改运行到函数时生效的filter</span> <span class="n">depth。</span>
+<span class="n n-Quoted">`trace_on`</span><span class="o">/</span><span class="n n-Quoted">`trace_off`</span> <span class="n">trigger控制是否trace指定的函数。</span>
+<span class="kt">time</span> <span class="n">trigger用于修改运行到函数时生效的time</span> <span class="k">filter</span><span class="n">。</span>
+<span class="k">read</span> <span class="n">trigger用于在运行时读取一些信息。支持下列事件</span><span class="o">:</span>
+    <span class="n n-Quoted">`proc/statm`</span><span class="o">:</span> <span class="n">从</span><span class="n n-Quoted">`/proc`</span><span class="n">文件系统获取的内存统计。</span>
+    <span class="n n-Quoted">`page-failt`</span><span class="o">:</span> <span class="n">从getrusage获取的page</span> <span class="n">fault次数统计。</span>
+    <span class="n n-Quoted">`pmu-cycle`</span><span class="o">:</span> <span class="n">从linux</span> <span class="n">perf</span><span class="o">-</span><span class="n">event系统调用获取的cpu周期和指令数。</span>
+    <span class="n n-Quoted">`pmu-cache`</span><span class="o">:</span> <span class="n">从linux</span> <span class="n">perf</span><span class="o">-</span><span class="n">event系统调用获取的cpu</span> <span class="k">cache</span> <span class="n">reference或miss。</span>
+    <span class="n n-Quoted">`pmu-branch`</span><span class="o">:</span> <span class="n">从linux</span> <span class="n">perf</span><span class="o">-</span><span class="n">event系统调用获取的分支指令和miss。</span>
+
+<span class="n">finish</span> <span class="n">trigger用于结束tracing。</span>
+<span class="k">filter</span> <span class="n">trigger同</span><span class="n n-Quoted">`-F/--filter`</span><span class="n">。</span>
+<span class="n">notrace</span> <span class="n">trigger同</span><span class="n n-Quoted">`-N/--notrace`</span><span class="n">选项。</span>
+
+<span class="n">trigger暂时只支持user</span> <span class="k">level</span> <span class="k">function</span><span class="n">。</span>
+<span class="n">trigger也可用于signal，通过</span><span class="n n-Quoted">`--signal`</span><span class="n">选项指定，目前只支持</span><span class="s2">&quot;trace_on&quot;</span><span class="p">,</span> <span class="s2">&quot;trace_off&quot;</span><span class="n">和</span><span class="s2">&quot;finish&quot;</span><span class="n">。</span>
+</code></pre></div>
+
+<p>参数 argument
+    "-A/--argument"和"-R/--retval"选项的参数:</p>
+<div class="highlight"><pre><span></span><code>    <span class="o">&lt;</span><span class="n">argument</span><span class="o">&gt;</span>  <span class="o">:=</span> <span class="o">&lt;</span><span class="n">symbol</span><span class="o">&gt;</span> <span class="p">[</span><span class="s">&quot;@&quot;</span> <span class="o">&lt;</span><span class="n">specs</span><span class="o">&gt;</span><span class="p">]</span>
+    <span class="o">&lt;</span><span class="n">specs</span><span class="o">&gt;</span>     <span class="o">:=</span> <span class="o">&lt;</span><span class="n">spec</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">spec</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">specs</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">spec</span><span class="o">&gt;</span>      <span class="o">:=</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">int_spec</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">float_spec</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">rec_spec</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="o">&lt;</span><span class="n">int_spec</span><span class="o">&gt;</span>  <span class="o">:=</span> <span class="s">&quot;arg&quot;</span> <span class="n">N</span> <span class="p">[</span><span class="s">&quot;/&quot;</span> <span class="o">&lt;</span><span class="n">format</span><span class="o">&gt;</span><span class="p">[</span><span class="o">&lt;</span><span class="n">size</span><span class="o">&gt;</span><span class="p">]][</span><span class="s">&quot;%&quot;</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">reg</span><span class="o">&gt;|&lt;</span><span class="n">stack</span><span class="o">&gt;</span><span class="p">)]</span>
+    <span class="o">&lt;</span><span class="n">float_spec</span><span class="o">&gt;</span>    <span class="o">:=</span> <span class="n">fparg</span><span class="s">&quot; N [&quot;</span><span class="o">/</span><span class="s">&quot;(&lt;size&gt; | &quot;</span><span class="mi">80</span><span class="s">&quot;)][&quot;</span><span class="o">%</span><span class="s">&quot;(&lt;reg&gt;|&lt;stack&gt;)]</span>
+    <span class="o">&lt;</span><span class="n">ret_spec</span><span class="o">&gt;</span>      <span class="o">:=</span> <span class="s">&quot;retval&quot;</span> <span class="p">[</span><span class="s">&quot;/&quot;</span> <span class="o">&lt;</span><span class="n">format</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">size</span><span class="o">&gt;</span><span class="p">]]</span>
+    <span class="o">&lt;</span><span class="n">format</span><span class="o">&gt;</span>        <span class="o">:=</span> <span class="s">&quot;d&quot;</span> <span class="o">|</span> <span class="s">&quot;i&quot;</span> <span class="o">|</span> <span class="s">&quot;u&quot;</span> <span class="o">|</span> <span class="s">&quot;x&quot;</span> <span class="o">|</span> <span class="s">&quot;s&quot;</span> <span class="o">|</span> <span class="s">&quot;c&quot;</span> <span class="o">|</span> <span class="s">&quot;f&quot;</span> <span class="o">|</span> <span class="s">&quot;S&quot;</span> <span class="o">|</span> <span class="s">&quot;p&quot;</span>
+    <span class="o">&lt;</span><span class="n">size</span><span class="o">&gt;</span>          <span class="o">:=</span> <span class="s">&quot;8&quot;</span> <span class="o">|</span> <span class="s">&quot;16&quot;</span> <span class="o">|</span> <span class="s">&quot;32&quot;</span> <span class="o">|</span> <span class="s">&quot;64&quot;</span>
+    <span class="o">&lt;</span><span class="n">reg</span><span class="o">&gt;</span>           <span class="o">:=</span> <span class="o">&lt;</span><span class="n">arch</span><span class="o">-</span><span class="n">specific</span> <span class="k">register</span> <span class="n">name</span><span class="o">&gt;</span> <span class="err">#</span> <span class="s">&quot;rdi&quot;</span><span class="p">,</span> <span class="s">&quot;xmm0&quot;</span><span class="p">,</span> <span class="s">&quot;r0&quot;</span><span class="p">,</span> <span class="p">...</span>
+    <span class="o">&lt;</span><span class="n">stack</span><span class="o">&gt;</span>         <span class="o">:=</span> <span class="s">&quot;stack&quot;</span> <span class="p">[</span> <span class="s">&quot;+&quot;</span> <span class="p">]</span> <span class="o">&lt;</span><span class="n">offset</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="nt">函数参数下标从1开始</span><span class="err">。</span><span class="nt">integer</span><span class="o">/</span><span class="nt">pointer和floating-point参数的下标分开计算</span><span class="err">。</span>
+<span class="s2">&quot;S&quot;</span><span class="nt">表示std</span><span class="p">::</span><span class="nd">string</span><span class="err">，</span><span class="nt">但是只支持libstdc</span><span class="o">++</span><span class="err">。</span>
+
+<span class="nt">参数调用约定</span><span class="o">:</span>
+    <span class="nt">x86</span><span class="o">:</span> <span class="nt">rdi</span><span class="o">,</span> <span class="nt">rsi</span><span class="o">,</span> <span class="nt">rdx</span><span class="o">,</span> <span class="nt">rcd</span><span class="o">,</span> <span class="nt">r8</span><span class="o">,</span> <span class="nt">r8</span><span class="o">;</span> <span class="nt">xmm</span><span class="cp">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">7</span><span class="cp">]</span>
+    <span class="nt">arm</span><span class="o">:</span> <span class="nt">r</span><span class="cp">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">3</span><span class="cp">]</span><span class="o">,</span> <span class="nt">s</span><span class="cp">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">15</span><span class="cp">]</span><span class="o">;</span> <span class="nt">d</span><span class="cp">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">7</span><span class="cp">]</span>
+
+<span class="nt">只有指定了-pg编译选项</span><span class="err">，</span><span class="nt">才能获取函数参数和返回值</span><span class="err">。`</span><span class="nt">-finstrument-function</span><span class="err">`</span><span class="nt">选项仅限于库函数调用</span><span class="err">。</span><span class="nt">记录参数和返回值暂时仅限于用户函数</span><span class="err">。</span>
+<span class="nt">如果目标程序有SWARF等调试信息</span><span class="err">，</span><span class="nt">uftrace可以自动获取参数数目和类型</span><span class="o">(</span><span class="nt">当和libdw构建时</span><span class="o">)</span><span class="err">。`</span><span class="nt">-a</span><span class="o">/</span><span class="nt">--auto-args</span><span class="err">`</span><span class="nt">选项</span><span class="err">，</span><span class="nt">或者</span><span class="err">`</span><span class="nt">-A</span> <span class="o">.</span><span class="err">`。</span>
+</code></pre></div>
+
+<p>动态追踪 dynamic tracing</p>
+<div class="highlight"><pre><span></span><code>静态tracing: -pg/-finstrument-functions选项，所有函数调用`mcount()`。
+
+动态tracing: `-P/--patch`选项, `-U/--unpatch`选项。capstone disassembly engine。
+
+`-mfentry/-mnop-mcount`选项,函数入口添加对`mcount()`的调用并转化为nop。
+
+-U选项可用于取消`-pg`, `-mentry`或`-mentry-mcount`的作用。
+
+Clang/LLVM 4.0支持xray https://llvm.org/docs/XRay.html
+</code></pre></div>
+
+<p>脚本执行script execution</p>
+<div class="highlight"><pre><span></span><code><span class="err">支持的脚本语言版本</span><span class="o">:</span> <span class="n">python</span> <span class="mf">2.7</span><span class="o">,</span> <span class="n">Python</span> <span class="mi">3</span><span class="err">和</span><span class="n">Lua</span> <span class="mf">5.1</span>
+
+<span class="n">uftrace_begin</span><span class="o">(</span><span class="n">ctx</span><span class="o">)</span>
+<span class="n">uftrace_end</span><span class="o">(</span><span class="n">ctx</span><span class="o">)</span>
+<span class="n">uftrace_entry</span><span class="o">(</span><span class="n">ctx</span><span class="o">)</span>
+<span class="n">uftrace_exit</span><span class="o">(</span><span class="n">ctx</span><span class="o">)</span>
+
+<span class="n">script_context</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">int</span> <span class="n">tid</span><span class="o">;</span>
+    <span class="n">int</span> <span class="n">depth</span><span class="o">;</span>
+    <span class="n">long</span> <span class="n">timestamp</span><span class="o">;</span>
+    <span class="n">long</span> <span class="n">duration</span><span class="o">;</span>
+    <span class="n">long</span> <span class="n">address</span><span class="o">;</span>
+    <span class="n">string</span> <span class="n">name</span><span class="o">;</span>
+    <span class="n">list</span> <span class="n">args</span><span class="o">;</span>
+    <span class="n">value</span> <span class="n">retval</span><span class="o">;</span>
+<span class="o">};</span>
+
+<span class="n">script_context</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">bol</span> <span class="n">record</span><span class="o">;</span>
+    <span class="n">string</span> <span class="n">version</span><span class="o">;</span>
+    <span class="n">list</span> <span class="n">cmd</span><span class="o">;</span>
+<span class="o">};</span>
+</code></pre></div>
+
+<p>```</p>
+<div class="highlight"><pre><span></span><code>详见`uftrace-script(1)`
+</code></pre></div>
+
+<p>观察点 watch point</p>
+<div class="highlight"><pre><span></span><code>只支持在函数入口和出口观察值的改变。
+
+只支持cpu一个观察点。
+</code></pre></div>
+
+<p>uftrace-replay</p>
+<p>replay选项:</p>
+<div class="highlight"><pre><span></span><code>`-f FIELD/--output-fields=FIELD` 指定要显示的域。
+`--flat` 以flat格式而不是C-like格式打印。
+`--column-view` 每个task在不同列中显示。
+`--column-offset=DEPTH` 在指定了`--column-view`时，此选项指定task间的距离，默认8。
+`--task-newline` 当task切换时打印一个newline。
+`--no-comment` 不在函数返回时用注释打印返回的函数。
+`--libname` 在函数名旁显示库的名字。
+</code></pre></div>
+
+<p>公共分析选项:</p>
+<div class="highlight"><pre><span></span><code>`--kernel-full` 显示所有发生在用户函数外的内核函数和事件。
+`--kernel-only` 只显示内核函数，不显示用户函数。
+`--event-full` 显示所有用户函数外的(用户)事件。
+`--tid=TID[,TID,...]` 只显示指定任务的事件。
+`--demangle=TYPE` full/simple/no
+`-r RANGE, --time-range=RANGE` 只显示指定时间段内运行的函数。RANGE指定为`&lt;start&gt;~&lt;stop&gt;`，`&lt;start&gt;`和`&lt;stop&gt;`均可省略。
+</code></pre></div>
+
+<p>-f选项参数:
+    tid: task id
+    duration: 函数执行时间
+    time: 执行时的timestamp
+    delta: 一个任务中两个timestamp的时间差
+    elapsed: 从第一个timestamp开始的时间
+    addr: 函数的地址
+    task: 任务名
+    module: 库或者可执行文件的名字</p>
+<div class="highlight"><pre><span></span><code><span class="n">none</span><span class="o">:</span> <span class="err">禁用</span><span class="o">-</span><span class="n">f</span>
+<span class="err">默认值为`</span><span class="n">tid</span><span class="o">,</span><span class="n">time</span><span class="err">`。`</span><span class="o">+</span><span class="n">name</span><span class="err">`把</span><span class="n">name</span> <span class="n">append到默认选项后</span><span class="err">。</span>
+</code></pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <title>sed cheatsheet</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="Sed 总结 sed makes only one pass over the input. 确定脚本，输入，输出 '-'作为文件名表示标准输入(由sed解释)。 -i 选项in-place 覆盖输入文件，可指定备份输入文件的后缀。..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Li Jinpei's Website</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/programming-skill.html">programming skill</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/sed-cheatsheet.html" rel="bookmark"
+           title="Permalink to sed cheatsheet">sed cheatsheet</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2021-01-25T00:00:00+08:00">
+                Published: Mon 25 January 2021
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/li-jinpei.html">Li Jinpei</a>
+        </address>
+<p>In <a href="/category/programming-skill.html">programming skill</a>.</p>
+<p>tags: <a href="/tag/tool.html">tool</a> <a href="/tag/cheatsheet.html">cheatsheet</a> </p>
+</footer><!-- /.post-info -->      <h1>Sed 总结</h1>
+<p>sed makes only one pass over the input.</p>
+<h2>确定脚本，输入，输出</h2>
+<p>'-'作为文件名表示标准输入(由sed解释)。</p>
+<p>-i 选项in-place 覆盖输入文件，可指定备份输入文件的后缀。</p>
+<p>默认打印所有被处理的输入，除了用d选项删除的。-n选项只打印p命令打印的文本。</p>
+<p>默认所有文件当成一个长的流。-s选项处理每个输入文件为单独的流。</p>
+<p>无-e, -f选项时第一个非选项参数为脚本;有-e, -f选项时，所有非参数选项均为输入文件。</p>
+<p>未指定输入文件时，从标准输入获取输入。</p>
+<h2>命令行选项</h2>
+<p>--version</p>
+<p>--help</p>
+<div class="highlight"><pre><span></span><code>-n
+--quiet
+--silent
+</code></pre></div>
+
+<p>--debug</p>
+<div class="highlight"><pre><span></span><code>-e script
+--expression=script
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>-f script-file
+--file=script-file
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="o">-</span><span class="n">i</span><span class="o">[</span><span class="n">SUFFIX</span><span class="o">]</span><span class="w"></span>
+<span class="c1">--in-place[=SUFFIX]</span>
+</code></pre></div>
+
+<p>隐含了-s选项(因为每个输入文件对应一个备份文件)。</p>
+<div class="highlight"><pre><span></span><code>-l N
+--line-length=N
+</code></pre></div>
+
+<p>l命令默认的行长。</p>
+<p>--posix</p>
+<p>-b
+--binary</p>
+<p>--follow-symlinks</p>
+<div class="highlight"><pre><span></span><code><span class="o">-</span><span class="n">E</span>
+<span class="o">-</span><span class="n">r</span>
+<span class="o">--</span><span class="n">regex</span><span class="o">-</span><span class="n">extended</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>-s
+--seperate
+</code></pre></div>
+
+<p>--sandbox</p>
+<div class="highlight"><pre><span></span><code>-u
+--unbuffered
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>-z
+--null-data
+--zero-terminated
+</code></pre></div>
+
+<h2>退出值</h2>
+<p>0 成功</p>
+<p>1 非法命令，非法语法，非法正则表达式,或在--posix模式下使用了GNU扩展。</p>
+<p>2 一个或多个输入文件无法打开。会继续处理其他文件。</p>
+<p>4 运行时发生致命错误。</p>
+<p>q和Q命令可以指定sed的返回值。</p>
+<h2>sed脚本</h2>
+<h2>寻址：选择行</h2>
+<p>无选择时命令作用于所有的行。</p>
+<h3>指定行号</h3>
+<p><code>number</code> 行号。不指定-i或-s时，文件间行号连续编号<br>
+<code>$</code> 在所有的文件作为一个流的模式下，指定最后一个输入文件的最后一行;在各个文件作为分开的流处理的模式下(<code>-i</code>, <code>-s</code>)，匹配各个输入文件的最后一行。<br>
+<code>first~step</code>: 所有行号为<code>first + (n * step), n非负</code>的行。</p>
+<h3>正则匹配到的行</h3>
+<p>指定正则匹配到的行: <code>/regex/</code><br>
+regexp中的'/'要用'\'转义。<br>
+空正则表达式'//'重复上一个匹配。修饰符在正则表达式被编译时求值，因此无法为空正则表达式指定。<br></p>
+<p>\%regexp%</p>
+<p>使用%作为正则表达式的分割符，%可以用其他任何字符替换。</p>
+<p>/regexp/I</p>
+<p>\%regexp%I</p>
+<p>大小写无关匹配模式。</p>
+<p>/regexp/M</p>
+<p>\%regexp%M</p>
+<p>多行匹配模式。</p>
+<p>'^'和'$'会额外匹配行首和行尾的空字符串。</p>
+<p>\`和\\'分别匹配buffer的开头和结尾。</p>
+<p>'.'不会匹配newline。</p>
+<p>正则表达式对pattern space进行匹配。如果pattern space被修改了，则对被修改后的pattern space进行匹配。</p>
+<p>指定范围: 以逗号分割两个行选择, <code>sel1,sel2</code>，sel1和sel2都是inclusive。</p>
+<p>反选: 选择范围后加<code>!</code></p>
+<p>/regexp/</p>
+<h3>指定范围</h3>
+<p>如果第二个地址是regexp，则从第一个匹配的下一行开始匹配:range最少会匹配到2行。<br>
+如果第二个地址是行号且小于等于第一个地址，则只有第一个地址被匹配到。<br></p>
+<p>GNU 扩展:</p>
+<p>'0,/regexp/'当第一行匹配/regexp/时，行为和'1,/regexp/'不同。<br>
+addr1,+N addr1和下面的N行。<br>
+addr1,~N addr1直到下面地一个是N的倍数的行（包括这一行）。</p>
+<h2>正则表达式：选择文本</h2>
+<h3>基本与扩展正则表达式</h3>
+<p>默认为基本正则表达式语法，<code>-E</code>, <code>-r</code>, <code>--regexp-extended</code>激活扩展正则表达式语法。二者差别为对'?', '+', 括号，花括号和'|'的处理。基本正则语法需要前缀以'\'来使用特殊功能，扩展正则语法里需前缀以'\'来匹配这些字符自身。</p>
+<h3>基本正则表达式语法</h3>
+<p>char 一般字符匹配自身<br>
+'<em>' 重复0次，1次或多次上一个匹配。 作为一个GNU扩展，一个postfixed正则表达式可以后跟'</em>'，例如<code>a**</code>与<code>a*</code>相同;而按照POSIX 1003.1-2001标准，*在表达式或子表达式的开头时代表自身，但是许多非GNU实现不支持这一点，可移植的脚本中，在这种情况下可以使用<code>\*</code>。<br>
+'.' 匹配任何字符，包括换行。<br>
+'^' 匹配pattern space的开头。<code>^</code>只在正则表达式或子表达式的开头有特殊意义。<br>
+'$' 匹配pattern space的结尾。只在正则表达式或子表达式的结尾有特殊意义。<br>
+[list] 匹配list中的任何字符。<br>
+[^list] 匹配不在list中的任何字符。<br>
++ 一个或多个匹配。GNU扩展。<br>
+\? 一个或多个匹配。GNU扩展。<br>
+<code>\{i\}</code> i个匹配。<br>
+<code>\{i,j\}</code>i到j个匹配，inslusive。<br>
+<code>\{i,\}</code>i个或更多匹配。<br>
+<code>\(regexp\)</code> grouping。可用于将postfix算符作用于子表达式，或者使用back reference。<br>
+<code>regexp1\|regexp2</code> 匹配regexp1或regexp2。<br>
+<code>regexp1regexp2</code> 匹配regexp1与regexp2的concatenation。<br>
+<code>\digit</code> 第digit个用括号括起来的子表达式的内容，也即back reference。子表达式按照左括号的顺序排序。<br>
+<code>\n</code> 匹配回车符。<br>
+<code>\char</code> 匹配char，其中char是<code>$*.[\^</code>。C风格的转义只有<code>\n</code>和<code>\\</code>是可移植的，特别是<code>\t</code>在大多数sed实现中匹配<code>t</code>。<br></p>
+<h3>字符类与方括号表达式</h3>
+<p>方括号中，<code>a-b</code>表示范围，对范围的解释取决于locale。</p>
+<p>字符类，如果使用错误，在新的sed实现中，会报错；在老的的sed实现中，会被解释成普通的<code>[]</code>:</p>
+<div class="highlight"><pre><span></span><code># current GNU sed versions - incorrect usage rejected
+$ echo 1 | sed &#39;s/[:digit:]/X/&#39;
+sed: character class syntax is [[:space:]], not [:space:]
+
+# older GNU sed versions
+$ echo 1 | sed &#39;s/[:digit:]/X/&#39;
+1
+</code></pre></div>
+
+<p><code>[:alnum:]</code> : <code>[:alpha:]</code>与<code>[:digit:]</code>，也即<code>[0-9A-Za-z]</code>。<br>
+<code>[:alpha:]</code> : <code>[:lower:]</code>与<code>[:upper:]</code>，在C locale和ascii编码中，同<code>[A-Za-z]</code>。<br>
+<code>[:blank:]</code> : 空白字符，空格与制表符。<br>
+<code>[:cntrl:]</code> : 控制字符，在ASCII中，从000到037，与177 (DEL)。<br>
+<code>[:digit:]</code> : 0 1 2 3 4 5 6 7 8 9<br>
+<code>[:graph:]</code> : <code>[:alnum:]</code>与<code>[:punct:]</code>。<br>
+<code>[:lower:]</code> : 小写字符<br>
+<code>[:print:]</code> : 可打印字符,<code>[:alnum:]</code>, <code>[:punct:]</code>与space。<br>
+<code>[:punct:]</code> : 标点字符, <code>! " # $ % &amp; ' ( ) * + , - . / : ; &lt; = &gt; ? @ [ \ ] ^ _</code> { | } ~<code>&lt;br&gt;</code>[:space:]<code>: space字符，tab, newline, vertical tab, form feed, carriage return, and space。&lt;br&gt;</code>[:upper:]<code>: 大写字符&lt;br&gt;</code>[:xdigit:]` : 十六进制digit，包含大写和小写。<br></p>
+<p><code>$, *, ., [,</code>和 <code>\</code>在方括号内通常失去特殊含义。但是，由于<code>[.ch.]</code>，<code>[=a=]</code>，和<code>[:space:]</code>分表表示collating symbol，等价类与字符类，因此<code>[</code>在后跟<code>.</code>，<code>=</code>和<code>:</code>时有特殊含义。在非POSIXLY_CORRECT下，特殊转义，如<code>\n</code>，<code>\t</code>等会被recongnize。</p>
+<p><code>[.</code>和<code>.]</code>，collating symbol的开头和结尾。<code>[=</code>和<code>=]</code>，等价类的开头和结尾。<code>[:</code>和<code>:]</code>字符类的开头和结尾。</p>
+<h3>正则表达式扩展</h3>
+<p><code>\w</code> 匹配word字符，即字母，数字，下划线。<br>
+<code>\W</code> 匹配非word字符。<br>
+<code>\b</code>匹配word boundary。<br>
+<code>\B</code>匹配非word boundary。<br>
+<code>\s</code> 匹配空白字符，空格，tab，换行。<br>
+<code>\S</code> 匹配非空白字符。<br>
+<code>\&lt;</code> 匹配word开头。<br>
+<code>\&gt;</code> 匹配word结尾。<br>
+<code>\`` 匹配pattern space的开头，在多行模式与</code>^<code>不同。&lt;br&gt;</code>\'<code>匹配pattern space的结尾，在多行模式与</code>$`不同。<br></p>
+<h3>back reference与子表达式</h3>
+<p>在使用alternation时，如果子表达式没有参与匹配，那么使用相应back reference会导致匹配失败，例如<code>a(.)|b\1</code>不匹配<code>ba</code>。</p>
+<p>当时用-e或-f制定了多个正则表达式时，back reference本地于所在的表达式。</p>
+<h3>转义序列</h3>
+<p><code>\a</code> BEL 字符<br>
+<code>\f</code> form feed<br>
+<code>\n</code> 换行<br>
+<code>\r</code> 回车<br>
+<code>\t</code> 水平制表符<br>
+<code>\v</code> 垂直制表符<br>
+<code>\cx</code> 匹配CONTROL-x。如果x是小写字符，那么转换到相应的大写字符。将字符的第6位(16进制40)反转。<br>
+<code>\dxxx</code> 匹配十进制ascii码为xxx的字符。<br>
+<code>\oxxx</code> 匹配八进制ascii码为xxx的字符。<br>
+<code>\xxx</code> 匹配十六禁止ascii码为xx的字符。<br></p>
+<p>注意，<code>\b</code>匹配word boundary而不是backspace。</p>
+<h3>转义字符优先级</h3>
+<p>转义字符是在sed把字符串交给正则引擎之前由sed处理的。例如，下面两个命令是等价的。</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> <span class="s1">&#39;a^c&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/^/b/&#39;</span>
+ba^c
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> <span class="s1">&#39;a^c&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\x5e/b/&#39;</span>
+ba^c
+</code></pre></div>
+
+<h3>多字节字符与locale</h3>
+<p>在多字节locale(例如UTF-8)中，GNU sed处理合法的多字节字符。要强制sed处理sed，使用C locale:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">printf</span> <span class="s1">&#39;a\u03A3b&#39;</span> <span class="p">|</span> <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8 sed <span class="s1">&#39;s/./X/g&#39;</span>
+$ <span class="nb">printf</span> <span class="s1">&#39;a\u03A3b&#39;</span> <span class="p">|</span> <span class="nv">LC_ALL</span><span class="o">=</span>C sed <span class="s1">&#39;s/./X/g&#39;</span>
+</code></pre></div>
+
+<h3>不合法的多字节字符</h3>
+<p>sed的正则表达式不会匹配不合法的多字节字符。z命令可以无视不合法的多字节字符清除pattern space。</p>
+<p>例子，使用八进制值打印不合法的多字节字符:</p>
+<div class="highlight"><pre><span></span><code>$ sed -n <span class="s1">&#39;s/.//g ; H ; ${x;s/\n//g;l}&#39;</span> invalid.txt
+</code></pre></div>
+
+<p>打印不合法的多字节字符的行号:</p>
+<div class="highlight"><pre><span></span><code>$ sed -n <span class="s1">&#39;s/.//g;=;l&#39;</span> invalid.txt <span class="p">|</span> paste - -  <span class="p">|</span> awk <span class="s1">&#39;$2!=&quot;$&quot;&#39;</span>
+</code></pre></div>
+
+<h3>大小写转换</h3>
+<p>s命令中使用<code>\L</code>和<code>\U</code>。</p>
+<div class="highlight"><pre><span></span><code>printf &#39;ABC\u03a3\n&#39; | sed &#39;s/.*/\L&amp;/&#39;
+</code></pre></div>
+
+<h3>多字节字符类</h3>
+<p>TODO</p>
+<h2>高级sed: 周期和缓冲区</h2>
+<p>两个缓冲区:</p>
+<div class="highlight"><pre><span></span><code>    pattern space
+    hold space
+</code></pre></div>
+
+<p>sed的运行过程:</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">for</span> <span class="nv">each</span> <span class="nv">input</span> <span class="nv">line</span>:
+            去掉可能的结尾处换行
+            放入<span class="nv">patten</span> <span class="nv">space</span>
+            <span class="k">for</span> <span class="nv">each</span> <span class="nv">command</span>
+                    <span class="k">if</span> <span class="ss">(</span><span class="nv">command</span> 的条件匹配<span class="ss">)</span> <span class="nv">begin</span>
+                            执行命令
+                    <span class="k">end</span>
+            <span class="k">if</span> <span class="ss">(</span>没有指定<span class="o">-</span><span class="nv">n</span>选项<span class="ss">)</span> <span class="nv">begin</span>
+                    打印<span class="nv">pattern</span> <span class="nv">space</span>
+                    <span class="k">if</span> <span class="ss">(</span>去掉了行末回车<span class="ss">)</span> <span class="nv">begin</span>
+                            打印回车
+                    <span class="k">end</span>
+            <span class="k">end</span>
+</code></pre></div>
+
+<p>除非指定了特殊的命令（例如D），pattern space在两个cycle(也就是对一行的处理)间会被清除。hold space会被保留。</p>
+<h3>多行处理</h3>
+<p>D</p>
+<p>G</p>
+<p>H</p>
+<p>N</p>
+<p>P</p>
+<h3>跳转与流程控制</h3>
+<h2>样例脚本</h2>
+<h2>Sed的工作方式</h2>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

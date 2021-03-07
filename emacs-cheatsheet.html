@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <title>emacs cheatsheet</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="prefix key: `C-c` `C-h`/`F1` `C-x` `C-x RET` `C-x @` `C-x a` `C-x n` `C-x r` `C-x t` `C-x 4` `C-x 5` `C-x 6`/`F-2` `ESC` `M-g` `M-o` command..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Li Jinpei's Website</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/programming-skill.html">programming skill</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/emacs-cheatsheet.html" rel="bookmark"
+           title="Permalink to emacs cheatsheet">emacs cheatsheet</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2021-03-07T00:00:00+08:00">
+                Published: Sun 07 March 2021
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/li-jinpei.html">Li Jinpei</a>
+        </address>
+<p>In <a href="/category/programming-skill.html">programming skill</a>.</p>
+<p>tags: <a href="/tag/tool.html">tool</a> <a href="/tag/cheatsheet.html">cheatsheet</a> </p>
+</footer><!-- /.post-info -->      <div class="highlight"><pre><span></span><code><span class="n">prefix</span> <span class="k">key</span><span class="o">:</span>
+
+    <span class="n n-Quoted">`C-c`</span>
+    <span class="n n-Quoted">`C-h`</span><span class="o">/</span><span class="n n-Quoted">`F1`</span>
+    <span class="n n-Quoted">`C-x`</span>
+    <span class="n n-Quoted">`C-x RET`</span>
+    <span class="n n-Quoted">`C-x @`</span>
+    <span class="n n-Quoted">`C-x a`</span>
+    <span class="n n-Quoted">`C-x n`</span>
+    <span class="n n-Quoted">`C-x r`</span>
+    <span class="n n-Quoted">`C-x t`</span>
+    <span class="n n-Quoted">`C-x 4`</span>
+    <span class="n n-Quoted">`C-x 5`</span>
+    <span class="n n-Quoted">`C-x 6`</span><span class="o">/</span><span class="n n-Quoted">`F-2`</span>
+    <span class="n n-Quoted">`ESC`</span>
+    <span class="n n-Quoted">`M-g`</span>
+    <span class="n n-Quoted">`M-o`</span>
+
+<span class="n">command</span>
+
+<span class="k">function</span>
+
+<span class="n">keymap</span>
+
+<span class="n">variable</span>
+</code></pre></div>
+
+<p><code>c-q</code>/quoted-insert:
+    non-graphical character
+    octal digits
+<code>c-x 8</code>:
+    hexadecimal number
+    number with a specified radix</p>
+<p><code>line-move-visual</code>
+<code>track-eol</code>
+<code>next-line-add-newline</code></p>
+<p><code>C-f</code>
+<code>C-b</code>
+<code>C-n</code>
+<code>C-p</code>
+<code>C-a</code> 行首
+<code>C-e</code> 行尾</p>
+<p><code>M-f</code>/<code>C-RIGHT</code>/<code>M-RIGHT</code>
+<code>M-b</code>/<code>C-LEFT</code>/<code>M-LEFT</code> 以单词为单位移动
+<code>M-r</code>/<code>move-to-window-line-top-bottom</code> 无参数时，连续<code>M-r</code>，不移动text，在中间最左，顶部最左，底部最左之间切换。有参数时，移动到相应的screen line最左，非负数从屏幕头部数，负数从底部数。
+<code>M-&lt;</code> 移动到buffer的开头。数字参数n表示n/10。
+<code>M-&gt;</code> 移动到buffer的末尾。</p>
+<p><code>C-v</code>/<code>PageDown</code>/<code>next</code> 向下翻页
+<code>M-v</code>/<code>PageUp</code>/<code>prior</code> 向上翻页
+<code>M-g c</code> 读取一个数字参数n，移动到第n个字符。
+<code>M-g M-g</code>/<code>M-g g</code> 移动到第n行。n可以读取数字参数;若point在一个数字上后数字之后，RET使用这个数字;或者通过前缀参数。第一行编号是1。
+<code>M-g tag</code> 移动到第n列。n可以是读取数字，或者数字前缀参数。
+<code>C-u C-x C-n</code> Cancel the goal column. Henceforth, C-n and C-p try to preserve the horizontal position, as usual. </p>
+<p><code>DEL</code>是BACKSPACE。
+<code>Delete</code>是键盘上写着<code>Del</code>的键。</p>
+<p><code>DEL</code>/<code>BACKSPACE</code>/<code>delete-backward-char</code> 向后删除(字符或region)。
+<code>Delete</code>/<code>delete-forward-char</code> 向前删除(字符或region)。
+<code>C-d</code>/<code>delete-char</code>向后删除（仅字符）。
+<code>C-k</code>/<code>kill-line</code> 删除到行末。
+<code>M-d</code>/<code>kill-word</code> 删除到下个单词的末尾。
+<code>M-Del</code>/<code>M-BACKSPACE</code>/<code>backward-kill-word</code></p>
+<p><code>c-/</code>/<code>c-x u</code>/<code>c-_</code>/<code>undo</code>
+<code>C-x C-f</code> 打开文件。
+<code>C-x C-s</code> 保存文件。
+<code>C-h k</code> + 按键 <code>describe-key</code> 给出关于按键的帮助。
+<code>C-h</code>/<code>F1</code> 帮助命令。</p>
+<p><code>C-o</code>/<code>open-line</code> 光标后插入空行。
+<code>C-x C-o</code>/<code>delete-blank-lines</code> 删除连续空行，只保留一个。
+    若在连续的空行上，则只保留一个空行。
+    若在单个空行上，则删除相应空行。
+    若在非空行上，删除下面的所有空行(只包括紧跟着的空行)。</p>
+<p>visual line mode 在word boundary wrap line，<code>C-a</code>, <code>C-n</code>, <code>C-k</code>以visual line为单位。</p>
+<p><code>M-x what-line</code> 显示point的行号。
+<code>M-x line-number-mode</code> 在mode-line中显示行号。
+<code>M-X column-number-mode</code> 在mode-line中显示列号。
+<code>M-=</code>/<code>count-word-region</code> 显示region中的行数，单词数，字符数。
+<code>C-u M-=</code> 显示整个buffer的行数，单词数，字符数。
+<code>M-x count-words</code> 显示行数，单词数，字符数。如果有region active，则显示region的;否则显示buffer的。
+<code>C-x =</code>/<code>what-current-position</code> 显示关于当前point位置，以及point后字符的信息。 选项<code>what-cursor-show-name</code> 显示字符的名字。
+<code>M-x hl-line-mode</code> 启用高亮当前行模式。
+<code>M-x size-indication-mode</code> 启用自动显示当前buffer的大小模式。
+<code>display-line-numbers-mode</code></p>
+<p>numeric-argument/prefix-argument</p>
+<p>方法一:
+    <code>M-数字1 数字2</code> 数字1可以是负号
+    <code>C-u</code>可用来显式结束序列
+方法二:
+    <code>C-u</code>/<code>universal-argument</code>
+    单独<code>C-u</code>表示4个，连续<code>C-u</code>表示4的幂。
+    <code>C-u</code> + 数字也可以用<code>C-u</code>显式结束序列。</p>
+<p>还有一种参数叫minibuffer argument</p>
+<p>On graphical displays, C-0, C-1, etc. act the same as M-0, M-1, etc. </p>
+<p><code>C-x z</code>/<code>repeat</code> 重复命令，不重新读取参数。z的个数表示重复次数。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

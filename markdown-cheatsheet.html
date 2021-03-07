@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <title>markdown cheatsheet</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="Markdown 总结 Basic Syntax heading <h1>,<h2>等 #, ##(井号后需空一格); 或===，---(一个vim小技巧,"C-v y p C-v r =")。 paragraph <p> 空一行。除非在list中，paragraph开头不要缩进。 line..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Li Jinpei's Website</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/programming-skill.html">programming skill</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/markdown-cheatsheet.html" rel="bookmark"
+           title="Permalink to markdown cheatsheet">markdown cheatsheet</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2021-01-25T00:00:00+08:00">
+                Published: Mon 25 January 2021
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/li-jinpei.html">Li Jinpei</a>
+        </address>
+<p>In <a href="/category/programming-skill.html">programming skill</a>.</p>
+<p>tags: <a href="/tag/tool.html">tool</a> <a href="/tag/cheatsheet.html">cheatsheet</a> </p>
+</footer><!-- /.post-info -->      <h1>Markdown 总结</h1>
+<h2>Basic Syntax</h2>
+<dl>
+<dt>heading <code>&lt;h1&gt;</code>,<code>&lt;h2&gt;</code>等</dt>
+<dd><code>#</code>, <code>##</code>(井号后需空一格); 或<code>===</code>，<code>---</code>(一个vim小技巧,"C-v y p C-v r =")。</dd>
+<dt>paragraph <code>&lt;p&gt;</code></dt>
+<dd>空一行。除非在list中，paragraph开头不要缩进。</dd>
+<dt>line break <code>&lt;br&gt;</code></dt>
+<dd>显式添加html tag。</dd>
+<dt>emphasis包括bold和italic</dt>
+<dd>
+<dl>
+<dt>bold</dt>
+<dd><code>**text**</code>或<code>__text__</code></dd>
+<dt>italic</dt>
+<dd><code>*text*</code>或<code>_text</code></dd>
+</dl>
+<p>既bold又italic: 三个星号或下划线。</p>
+</dd>
+<dt>blockquote</dt>
+<dd><code>&gt;</code>。blockquote可以嵌套，可以包含其他markdown element（并不是所有element都可以使用）。</dd>
+<dt>lists包括有序列表和无序列表</dt>
+<dd>
+<dl>
+<dt>ordered lists'</dt>
+<dd><code>num.</code>。num必须以1开头，但不需要按顺序。</dd>
+<dt>unordered lists</dt>
+<dd><code>-</code>，<code>*</code>，<code>+</code>。</dd>
+</dl>
+<p>要在list中添加其他元素，并在之后继续list，将元素缩进4个空格或者1个tab。</p>
+</dd>
+<dt>code block 代码块</dt>
+<dd>四个空格或者1个tab缩进。在列表中需要8个空格或者2个tab缩进。</dd>
+<dt>image</dt>
+<dd><code>![名称](路径)</code></dd>
+<dt>linking image(就是点击会跳转到链接的image)</dt>
+<dd><code>[![名称](路径)](url)</code></dd>
+<dt>代码<code>&lt;code&gt;</code> tag</dt>
+<dd><code>`code`</code>。要在back-tick中包含back-tick，需要用两个back-tick做引号。</dd>
+<dt>horizontal rules</dt>
+<dd>单独一行3个或以上<code>***</code>，<code>---</code>或<code>___</code>。</dd>
+<dt>link</dt>
+<dd><code>[link text](url "tooltip")</code></dd>
+<dt>url</dt>
+<dd><code>&lt;url&gt;</code> <code>&lt;邮箱地址&gt;</code>
+url中的空格使用base64编码<code>%20</code></dd>
+<dt>reference-style link</dt>
+<dd>
+<ol>
+<li>第一部分 <code>[text][label]</code>;</li>
+<li>第二部分 <code>[label]: url 描述</code>;label不区分大小写</li>
+</ol>
+</dd>
+<dt>转义</dt>
+<dd><code>\\</code>。可以转义的字符参见<a href="https://www.markdownguide.org/basic-syntax/#characters-you-can-escape">这里</a></dd>
+<dt>block-level html element</dt>
+<dd>
+<p>使用空行分割</p>
+<p>不能在block-level html tag中使用markdown语法</p>
+</dd>
+</dl>
+<h2>extended syntax</h2>
+<p>扩展语法是与工具相关的</p>
+<ul>
+<li>CommonMark</li>
+<li>GitHub Flavored Markdown(GFM)</li>
+<li>Markdown Extra</li>
+<li>MuiltiMarkdown</li>
+<li>R Markdown</li>
+</ul>
+<dl>
+<dt>tables</dt>
+<dd>
+<p>https://www.tablesgenerator.com/markdown_tables</p>
+<dl>
+<dt>表格对齐</dt>
+<dd>在表格中使用pipe字符: <code>&amp;#124;</code></dd>
+</dl>
+</dd>
+<dt>fenced code blocks及语法高亮</dt>
+<dd>```</dd>
+<dt>脚注</dt>
+<dd></dd>
+</dl>
+<div class="highlight"><pre><span></span><code><span class="nv">Here</span><span class="s1">&#39;</span><span class="s">s a simple footnote,[^1] and here</span><span class="s1">&#39;</span><span class="nv">s</span> <span class="nv">a</span> <span class="nv">longer</span> <span class="nv">one</span>.[<span class="o">^</span><span class="nv">bignote</span>]
+
+[<span class="o">^</span><span class="mi">1</span>]: <span class="nv">This</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">first</span> <span class="nv">footnote</span>.
+
+[<span class="o">^</span><span class="nv">bignote</span>]: <span class="nv">Here</span><span class="s1">&#39;</span><span class="s">s one with multiple paragraphs and code.</span>
+
+    <span class="nv">Indent</span> <span class="nv">paragraphs</span> <span class="nv">to</span> <span class="k">include</span> <span class="nv">them</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">footnote</span>.
+
+    `{ <span class="nv">my</span> <span class="nv">code</span> }`
+
+    <span class="nv">Add</span> <span class="nv">as</span> <span class="nv">many</span> <span class="nv">paragraphs</span> <span class="nv">as</span> <span class="nv">you</span> <span class="nv">like</span>.
+</code></pre></div>
+
+<p>实际效果:</p>
+<p>Here's a simple footnote,<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> and here's a longer one.<sup id="fnref:bignote"><a class="footnote-ref" href="#fn:bignote">2</a></sup></p>
+<dl>
+<dt>heading ID</dt>
+<dd><code>{#custom-id}</code></dd>
+<dt>linking to Heading IDs</dt>
+<dd><code>[Heading IDs](#heading-ids)</code></dd>
+<dt>definition list</dt>
+<dd>这份文档中用到了大量的definition list</dd>
+</dl>
+<div class="highlight"><pre><span></span><code>First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
+</code></pre></div>
+
+<dl>
+<dt>strikethrought</dt>
+<dd><code>~~text~~</code></dd>
+<dt>task list</dt>
+<dd></dd>
+</dl>
+<div class="highlight"><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="o">[</span><span class="n">x</span><span class="o">]</span><span class="w"> </span><span class="k">Write</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">press</span><span class="w"> </span><span class="k">release</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="o">[</span><span class="n"> </span><span class="o">]</span><span class="w"> </span><span class="k">Update</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">website</span><span class="w"></span>
+<span class="o">-</span><span class="w"> </span><span class="o">[</span><span class="n"> </span><span class="o">]</span><span class="w"> </span><span class="n">Contact</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">media</span><span class="w"></span>
+</code></pre></div>
+
+<dl>
+<dt>emoji</dt>
+<dd>
+<ul>
+<li>直接copu-past到markdown中</li>
+<li>emoji shortcodes
+    emoji shortcodes
+    : 
+        <code>:tent:</code>, <code>:joy:</code>
+        效果: :tent:， :jon:
+        <a href="https://gist.github.com/rxaviers/7360908">emoji shortcodes 列表</a></li>
+</ul>
+</dd>
+<dt>automatic url linking及禁用</dt>
+<dd>许多markdown处理器自动将url处理为链接。要阻止这种行为，在url前后加back-tick。</dd>
+</dl>
+<h2>参考来源</h2>
+<p><a href="https://www.markdownguide.org/basic-syntax/">基本语法</a></p>
+<p><a href="https://www.markdownguide.org/extended-syntax/">扩展语法</a></p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>This is the first footnote.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:bignote">
+<p>Here's one with multiple paragraphs and code.</p>
+<p>Indent paragraphs to include them in the footnote.</p>
+<p><code>{ my code }</code></p>
+<p>Add as many paragraphs as you like.&#160;<a class="footnote-backref" href="#fnref:bignote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

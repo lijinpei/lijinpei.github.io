@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <title>git cheatsheet</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="git cheatsheet gitrevisions: 指定修改或者范围 指定修改 <sha1>, e.g. dae86e1950b1277e545cee180551750029cfe735, dae86e <describeOutput>, e.g...." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Li Jinpei's Website</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/programming-skill.html">programming skill</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/git-cheatsheet.html" rel="bookmark"
+           title="Permalink to git cheatsheet">git cheatsheet</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2021-01-28T00:00:00+08:00">
+                Published: Thu 28 January 2021
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/li-jinpei.html">Li Jinpei</a>
+        </address>
+<p>In <a href="/category/programming-skill.html">programming skill</a>.</p>
+<p>tags: <a href="/tag/tool.html">tool</a> <a href="/tag/cheatsheet.html">cheatsheet</a> </p>
+</footer><!-- /.post-info -->      <h1>git cheatsheet</h1>
+<h2>gitrevisions: 指定修改或者范围</h2>
+<h3>指定修改</h3>
+<p><code>&lt;sha1&gt;, e.g. dae86e1950b1277e545cee180551750029cfe735, dae86e</code></p>
+<p><code>&lt;describeOutput&gt;, e.g. v1.7.4.2-679-g3bee7fb</code> <code>tag-num_of_commit-gobjectname</code> git describe的输出</p>
+<p><code>&lt;refname&gt;</code> e.g. <code>master</code>，<code>heads/master</code>，<code>refs/heads/master</code></p>
+<p>匹配顺序:</p>
+<div class="highlight"><pre><span></span><code>    1. $DIT_DIR/&lt;refname&gt;
+    2. refs/&lt;refname&gt;
+    3. refs/tags/&lt;refname&gt;
+    4. refs/heads/&lt;refname&gt;
+    5. refs/remotes/&lt;refname&gt;
+    6. refs/remotes/&lt;refname&gt;/HEAD
+
+    HEAD: working tree中基于哪个commit修改
+    FETCH_HEAD: 上次git fetch从哪个remote branch取
+    ORIG_HEAD: 部分命令记录之前HEAD的位置
+    MERGE_HEAD: 要merge的commit
+
+    上面的`refs/*`均包括了`$GIT_DIR/refs`和`$GIT_DIR/packed-refs`
+</code></pre></div>
+
+<p><code>@</code> 单独出现相当于HEAD</p>
+<p>[<refname>]@{<date>} 例如 <code>master@{yesterday}</code> <code>HEAD@{5 minutes ago}</code></p>
+<p><refname>@{n} n次之前<refname>的值</p>
+<p>@{n} 例如 @{1} 当前分支的reflog</p>
+<p>@{-n} n次之前检出的分支/commit</p>
+<p>[<branchname>]@{upstream} 例如: master@{upstream} {u}</p>
+<p>[<branchname>]@{push} 例如: master@{push}, @{push}</p>
+<p>branchname会推到的分支, 代表相应的本地分支</p>
+<p><rev>^[<n>] 第n个父节点 0表示自己</p>
+<p><rev>~[<n>] 第n代祖先</p>
+<p><rev>^{<type>} 递归解引用rev，直到达到type类型的对象</p>
+<p><rev>^{} 递归解引用，直到非tag</p>
+<p><rev>^{/text} <code>HEAD^{/fix nasty bug}</code></p>
+<p>:/<text> 例如: :<code>/fix nasty bug</code></p>
+<p>用commit message匹配正则</p>
+<p><code>:/!-</code>反向匹配
+<code>:/!!</code>匹配<code>!</code></p>
+<p><rev>:<path> tree-ish object中的path下的blob/tree path会转换为相对工作区的路径</p>
+<p>:[<n>:]<path> 例如 : <code>:0:README</code> <code>:README</code></p>
+<p>n是stage number(0到3)，不给出时表示0。在merge时，1是公共祖先，2是目标分支，3是被merge的分支。</p>
+<h3>指定范围</h3>
+<p>单个ref: 所有从ref可达的commit</p>
+<p>多个ref: 所有从其中任意ref可达的commit</p>
+<p>^<ref> (caret)表示法: 排除从ref可达的commit。例如:<code>^r1, r2</code>表示从r2可达且从r1不可达的commit</p>
+<p>r1..r2 与<code>^r1 r2</code>相同</p>
+<p><code>...</code>对称差分: <code>r1...r2</code>与<code>r1 r2 --not $(git merge-base --all r1 r2)</code>相同，从r1或r2可达且不同时从两者可达</p>
+<p>上面两种表示法中，省略某端点时表示在这个端点填HEAD</p>
+<p><code>r1^@</code> : r1的所有父节点</p>
+<p><code>r1^!</code>: 包括r1，并排除所有父节点</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
